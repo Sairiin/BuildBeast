@@ -124,12 +124,41 @@ function GF.ApplyFonts(root)
     walk(root)
 end
 
--- the verdict word of an item, in the language in use
-function GF.VerdictWord(v)
+-- How the verdict of an item is written, in four styles chosen in the options (BuildBeastDB.verdictStyle):
+--   text   : YES / NO / SIMILAR in the language in use
+--   symbol : + / - / =
+--   check  : the game's ready-check marks (green tick, red cross, yellow dots)
+--   arrow  : green arrow up, red arrow down, yellow equal sign (our own pictures)
+local function hasAtlas(name)
+    return C_Texture and C_Texture.GetAtlasInfo and C_Texture.GetAtlasInfo(name) and true or false
+end
+
+function GF.VerdictWordIn(style, v)
+    if style == "symbol" then
+        return (v == "SI" and "+") or (v == "NO" and "-") or "="
+    elseif style == "check" then
+        local tex = (v == "SI" and "ReadyCheck-Ready") or (v == "NO" and "ReadyCheck-NotReady") or "ReadyCheck-Waiting"
+        return "|TInterface\\RaidFrame\\" .. tex .. ":16:16|t"
+    elseif style == "arrow" then
+        -- our own small pictures (arrow_up, arrow_down, arrow_same in the addon folder): the game has no red down arrow
+        local name = (v == "SI" and "arrow_up") or (v == "NO" and "arrow_down") or "arrow_same"
+        return "|TInterface\\AddOns\\BuildBeast\\" .. name .. ":16:16|t"
+    end
     if v == "SI" then
         return GF.T("SI")
     elseif v == "NO" then
         return GF.T("NO")
     end
     return GF.T("SIMILE")
+end
+
+-- the verdict word of an item, in the style and language in use
+function GF.VerdictWord(v)
+    return GF.VerdictWordIn((BuildBeastDB and BuildBeastDB.verdictStyle) or "text", v)
+end
+
+-- the three words of a style side by side, for the buttons of the options
+function GF.VerdictPreview(style)
+    local sep = (style == "text") and " / " or "   "
+    return GF.VerdictWordIn(style, "SI") .. sep .. GF.VerdictWordIn(style, "NO") .. sep .. GF.VerdictWordIn(style, "SIMILE")
 end

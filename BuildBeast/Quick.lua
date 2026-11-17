@@ -14,14 +14,50 @@ local function scale()
     return math.max(SCALE_MIN, math.min(SCALE_MAX, s))
 end
 
--- the next talent of the plan at or after `level`: level, name
+-- the next talent of the plan that you do not have yet: level, name. With the talent data we skip what you already
+-- took (so the panel moves on as soon as you spend the point); without it we go by level only.
 local function nextTalent(spec, level)
     local plan = GF.plan(spec)
+    local ranks = GF.TalentRanks and GF.TalentRanks()
+    if ranks then
+        local count = {}
+        for lvl = 10, 60 do
+            local name = plan[lvl]
+            if name then
+                count[name] = (count[name] or 0) + 1
+                if (ranks[name] or 0) < count[name] then
+                    return lvl, name
+                end
+            end
+        end
+        return nil
+    end
     for lvl = math.max(10, level), 60 do
         if plan[lvl] then
             return lvl, plan[lvl]
         end
     end
+end
+
+-- a solid dark background (no transparency) for the window and the panel; on by default, optional
+function GF.ApplyDarkBackground(f)
+    if not f then
+        return
+    end
+    if not f.dark then
+        local t = f:CreateTexture(nil, "BACKGROUND", nil, -6)
+        t:SetPoint("TOPLEFT", 1, -1)
+        t:SetPoint("BOTTOMRIGHT", -1, 1)
+        t:SetColorTexture(0.03, 0.035, 0.045, 1)
+        f.dark = t
+    end
+    f.dark:SetShown(not (BuildBeastDB and BuildBeastDB.darkBg == false))
+end
+
+function GF.SetDarkBackground(on)
+    BuildBeastDB.darkBg = on and true or false
+    GF.ApplyDarkBackground(_G.BuildBeastFrame)
+    GF.ApplyDarkBackground(_G.BuildBeastQuick)
 end
 
 local function build()
@@ -43,6 +79,27 @@ local function build()
             BuildBeastDB.quickPos = { l = l, b = b }
         end
     end)
+    -- small x to hide the panel (it comes back from the options)
+    local x = CreateFrame("Button", nil, f)
+    x:SetSize(16, 16)
+    x:SetPoint("TOPRIGHT", -3, -3)
+    x.t = x:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    x.t:SetPoint("CENTER", 0, 0)
+    x.t:SetText("x")
+    x:SetScript("OnClick", function()
+        GF.SetQuickShown(false)
+        if GF.RefreshOptions then
+            GF.RefreshOptions()
+        end
+    end)
+    x:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+        GameTooltip:SetText(T("Nascondi il pannello (lo riattivi nelle Opzioni)"))
+        GameTooltip:Show()
+    end)
+    x:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
     f.icon = f:CreateTexture(nil, "ARTWORK")
     f.icon:SetSize(34, 34)
     f.icon:SetPoint("LEFT", 7, 0)
@@ -59,6 +116,7 @@ local function build()
     else
         f:SetPoint("TOP", UIParent, "TOP", 0, -150)
     end
+    GF.ApplyDarkBackground(f)
     return f
 end
 
@@ -101,6 +159,8 @@ function GF.InitQuick()
     -- the icons and the spec may be known a little later
     C_Timer.After(4, GF.RefreshQuick)
     C_Timer.After(14, GF.RefreshQuick)
+    -- and every few seconds, in case a talent change did not send its event
+    C_Timer.NewTicker(5, GF.RefreshQuick)
 end
 
 -- message at every level up
@@ -132,12 +192,12 @@ function GF.ChangeScale(delta)
     local s = math.floor((scale() + delta) * 10 + 0.5) / 10
     s = math.max(SCALE_MIN, math.min(SCALE_MAX, s))
     BuildBeastDB.scale = s
-    local w = _G.BuildBeastFrame
-    if w then
-        w:SetScale(s)
-    end
+    -- the window only changes the size of its text; the small panel is scaled as a whole
     if frame then
         frame:SetScale(s)
+    end
+    if GF.RefreshWindow then
+        GF.RefreshWindow()
     end
     if GF.RefreshScaleLabel then
         GF.RefreshScaleLabel()

@@ -40,6 +40,38 @@ local function cellKey(info)
     return tree .. "," .. row .. "," .. col
 end
 
+GF.cellKey = cellKey
+
+-- rank of every talent of the plan's class by name, read from the game's talent data (works with the talent window
+-- closed). nil when the data is not available yet.
+function GF.TalentRanks()
+    local ok, res = pcall(function()
+        local cfg = C_ClassTalents and C_ClassTalents.GetActiveConfigID and C_ClassTalents.GetActiveConfigID()
+        if not (cfg and C_Traits) then
+            return nil
+        end
+        local _, _, class = GF.specData()
+        local cells = BuildBeastCells and BuildBeastCells[class]
+        local info = C_Traits.GetConfigInfo(cfg)
+        local tree = info and info.treeIDs and info.treeIDs[1]
+        if not (cells and tree) then
+            return nil
+        end
+        local out, n = {}, 0
+        for _, nodeID in ipairs(C_Traits.GetTreeNodes(tree) or {}) do
+            local ni = C_Traits.GetNodeInfo(cfg, nodeID)
+            local key = ni and cellKey(ni)
+            local name = key and cells[key]
+            if name then
+                n = n + 1
+                out[name] = (ni.activeEntry and ni.activeEntry.rank) or ni.activeRank or 0
+            end
+        end
+        return n > 0 and out or nil
+    end)
+    return ok and res or nil
+end
+
 local function newMark(btn)
     local m = CreateFrame("Frame", nil, btn)
     m:SetAllPoints(btn)
@@ -177,7 +209,14 @@ function GF.InitTalents()
     for _, e in ipairs({ "TRAIT_CONFIG_UPDATED", "TRAIT_TREE_CURRENCY_INFO_UPDATED", "TRAIT_NODE_CHANGED" }) do
         pcall(ev.RegisterEvent, ev, e)
     end
-    ev:SetScript("OnEvent", GF.QueueTalentRefresh)
+    ev:SetScript("OnEvent", function()
+        GF.QueueTalentRefresh()
+        -- the panel with the next talent: the talent data settles a moment after the event, so look again twice
+        if GF.RefreshQuick then
+            C_Timer.After(0.3, GF.RefreshQuick)
+            C_Timer.After(1.5, GF.RefreshQuick)
+        end
+    end)
     -- The talent window is loaded on demand and builds its buttons a moment after it is shown, so the first opening
     -- can be missed by a hook. A small watcher (twice a second, 52 buttons to count) draws the marks as soon as the
     -- window is shown and its buttons exist, and again whenever the buttons change.

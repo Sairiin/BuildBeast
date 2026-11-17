@@ -19,6 +19,7 @@ local frame
 local viewLevel
 local currentTab = "livello"
 local raceClass     -- class shown in the Razza tab (nil: the player's own)
+local prevTab = "livello" -- tab to go back to from the Razza tab
 local raceSpec = {} -- class -> spec key chosen in the Razza tab
 local CLASS_ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
 
@@ -54,121 +55,127 @@ local function title(s)
     return GOLD .. s .. END
 end
 
--- Tab: Livello ----------------------------------------------------------------------------------------------------------
-local function tabLevel(spec, level)
-    local L = {}
+-- The tabs, drawn as cards (see View.lua) --------------------------------------------------------------------------------
+local QUESTION = "Interface\\Icons\\INV_Misc_QuestionMark"
+local GREY_RGB = { 0.6, 0.65, 0.72 }
+local C_GREEN, C_GREEN_BG = { 0.2, 1, 0.2 }, { 0.09, 0.17, 0.11 }
+local C_BLUE, C_BLUE_BG = { 0.29, 0.64, 1 }, { 0.09, 0.12, 0.19 }
+local C_GOLD, C_GOLD_BG = { 0.85, 0.68, 0.2 }, { 0.15, 0.13, 0.08 }
+local C_RED, C_RED_BG = { 1, 0.3, 0.3 }, { 0.2, 0.09, 0.09 }
+local C_DIM, C_DIM_BG = { 0.4, 0.42, 0.48 }, { 0.09, 0.09, 0.11 }
+local C_PLAIN, C_PLAIN_BG = { 0.55, 0.65, 0.85 }, { 0.11, 0.12, 0.15 }
+
+local function iconOf(name)
+    return (GF.IconFor and GF.IconFor(name)) or QUESTION
+end
+
+-- Livello
+local function fillLevel(v, spec, level)
     local plan = GF.plan(spec)
     local final = GF.ranksAt(spec, 60)
+    v:Begin()
 
-    L[#L + 1] = title(T("Talento di questo livello"))
+    v:Heading(T("Talento di questo livello"))
     if level < 10 then
-        L[#L + 1] = T("I talenti si sbloccano al livello 10.")
+        v:Card({ lines = T("I talenti si sbloccano al livello 10."), bar = C_DIM })
     else
         local n = plan[level]
         if n then
             local have = GF.ranksAt(spec, level)[n]
-            L[#L + 1] = Lf("Prendi %s (punto %d di %d)", GF.IconTag(n, 20) .. GREEN .. n .. END, have, final[n] or have)
+            v:Card({ icon = iconOf(n), size = 44, title = Lf("Prendi %s (punto %d di %d)", GREEN .. n .. END, have, final[n] or have),
+                bar = C_GREEN, bg = C_GREEN_BG })
         else
-            L[#L + 1] = T("Nessun punto talento a questo livello.")
+            v:Card({ lines = T("Nessun punto talento a questo livello."), bar = C_DIM })
         end
     end
-    L[#L + 1] = ""
 
-    L[#L + 1] = title(T("Abilita' nuove"))
+    v:Heading(T("Abilita' nuove"))
     if spec.spells[level] then
-        for piece in T(spec.spells[level]):gmatch("[^,;]+") do
-            piece = piece:gsub("^%s+", ""):gsub("%s+$", "")
+        for raw in T(spec.spells[level]):gmatch("[^,;]+") do
+            local piece = raw:gsub("^%s+", ""):gsub("%s+$", "")
             local name = (piece:match(":%s*(.+)$") or piece):gsub("^e%s+", "")
-            L[#L + 1] = GF.IconTag(name, 16) .. piece
+            v:Card({ icon = iconOf(name), size = 28, title = piece, bar = C_BLUE, bg = C_BLUE_BG })
         end
     else
-        L[#L + 1] = GREY .. T("Nessuna a questo livello.") .. END
+        v:Para(T("Nessuna a questo livello."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
     end
     for lvl = level + 1, 60 do
         if spec.spells[lvl] then
-            L[#L + 1] = GREY .. Lf("Prossime (livello %d): %s", lvl, T(spec.spells[lvl])) .. END
+            v:Para(Lf("Prossime (livello %d): %s", lvl, T(spec.spells[lvl])), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
             break
         end
     end
-    L[#L + 1] = ""
 
     local band = currentBand(spec, level)
-    L[#L + 1] = title(band and Lf("Rotazione (da livello %d)", band[1]) or T("Rotazione"))
+    v:Heading(band and Lf("Rotazione (da livello %d)", band[1]) or T("Rotazione"))
     if band then
         local text = T(band[2])
         local strip = GF.IconsInText(spec, text, 22, 8)
-        if strip ~= "" then
-            L[#L + 1] = strip
-        end
-        L[#L + 1] = text
+        v:Card({ lines = (strip ~= "" and (strip .. "\n") or "") .. text, bar = C_GOLD, bg = C_GOLD_BG })
     else
-        L[#L + 1] = "-"
+        v:Para("-")
     end
-    L[#L + 1] = ""
 
-    L[#L + 1] = title(T("Prossimi talenti"))
+    v:Heading(T("Prossimi talenti"))
     local shown = 0
     for lvl = level + 1, 60 do
         if plan[lvl] and shown < 6 then
-            L[#L + 1] = Lf("Livello %d: %s", lvl, GF.IconTag(plan[lvl], 16) .. plan[lvl])
+            v:Card({ icon = iconOf(plan[lvl]), size = 28, title = Lf("Livello %d: %s", lvl, plan[lvl]), bar = C_PLAIN, bg = C_PLAIN_BG })
             shown = shown + 1
         end
     end
     if shown == 0 then
-        L[#L + 1] = GREY .. T("Nessuno.") .. END
+        v:Para(T("Nessuno."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
     end
-    return table.concat(L, "\n")
+    return v:End()
 end
 
--- Tab: Talenti ----------------------------------------------------------------------------------------------------------
-local function tabTalents(spec, level)
-    local L = { title(T("Piano dei 51 punti talento (livelli 10-60)")),
-        GREY .. T("Grigio: gia' fatto. Oro: il punto di questo livello. I segni sul pannello dei talenti seguono questo piano.") .. END, "" }
+-- Talenti: one card per run of points; done = dim, this level = gold, later = plain
+local function fillTalents(v, spec, _, _, _, mine)
+    v:Begin()
+    v:Heading(T("Piano dei 51 punti talento (livelli 10-60)"))
+    v:Para(T("Grigio: gia' fatto. Oro: il punto di questo livello. I segni sul pannello dei talenti seguono questo piano."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
     for _, run in ipairs(spec.talentRuns) do
         local a, b, name = run[1], run[2], run[3]
         local points = b - a + 1
         local range = (a == b) and Lf("Liv %d", a) or Lf("Liv %d-%d", a, b)
-        local line = range .. ":  " .. GF.IconTag(name, 18) .. name .. (points > 1 and (" x" .. points) or "")
-        if b < level then
-            line = GREY .. line .. END
-        elseif a <= level and level <= b then
-            line = GOLD .. "> " .. line .. END
+        local card = { icon = iconOf(name), size = 28, title = range .. ":  " .. name, tag = points > 1 and ("x" .. points) or nil }
+        if b < mine then
+            card.bar, card.bg = C_DIM, C_DIM_BG
+            card.title = GREY .. card.title .. END
+        elseif a <= mine and mine <= b then
+            card.bar, card.bg = C_GOLD, C_GOLD_BG
+            card.title = GOLD .. "> " .. card.title .. END
         else
-            line = WHITE .. line .. END
+            card.bar, card.bg = C_PLAIN, C_PLAIN_BG
         end
-        L[#L + 1] = line
+        v:Card(card)
     end
-    return table.concat(L, "\n")
+    return v:End()
 end
 
--- Tab: Rotazione --------------------------------------------------------------------------------------------------------
-local function tabRotation(spec, level)
-    local L = { title(T("Rotazione, a passi di livello")),
-        GREY .. T("Hekili sceglie da solo le abilita' che hai gia' imparato: queste note spiegano il perche'.") .. END, "" }
+-- Rotazione: one card per band of levels
+local function fillRotation(v, spec, level)
+    v:Begin()
+    v:Heading(T("Rotazione, a passi di livello"))
+    v:Para(T("Hekili sceglie da solo le abilita' che hai gia' imparato: queste note spiegano il perche'."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
     local current = currentBand(spec, level)
     for _, b in ipairs(spec.bands) do
         local text = T(b[2])
         local strip = GF.IconsInText(spec, text, 22, 8)
+        local body = (strip ~= "" and (strip .. "\n") or "")
         if current and b[1] == current[1] then
-            L[#L + 1] = GOLD .. "> " .. Lf("Da livello %d (ora)", b[1]) .. END
-            if strip ~= "" then
-                L[#L + 1] = strip
-            end
-            L[#L + 1] = text
+            v:Card({ title = GOLD .. "> " .. Lf("Da livello %d (ora)", b[1]) .. END, lines = body .. text, bar = C_GOLD, bg = C_GOLD_BG })
+        elseif b[1] < level then
+            v:Card({ title = GREY .. Lf("Da livello %d", b[1]) .. END, lines = body .. GREY .. text .. END, bar = C_DIM, bg = C_DIM_BG })
         else
-            local color = (b[1] < level) and GREY or WHITE
-            L[#L + 1] = color .. Lf("Da livello %d", b[1]) .. END
-            if strip ~= "" then
-                L[#L + 1] = strip
-            end
-            L[#L + 1] = color .. text .. END
+            v:Card({ title = Lf("Da livello %d", b[1]), lines = body .. text, bar = C_PLAIN, bg = C_PLAIN_BG })
         end
-        L[#L + 1] = ""
     end
-    return table.concat(L, "\n")
+    return v:End()
 end
 
--- Tab: Oggetti ----------------------------------------------------------------------------------------------------------
+-- Oggetti
 local STAT_LABEL = {
     ITEM_MOD_AGILITY_SHORT = N("Agilita'"),
     ITEM_MOD_INTELLECT_SHORT = N("Intelletto"),
@@ -183,20 +190,27 @@ local STAT_LABEL = {
     ITEM_MOD_MANA_REGENERATION_SHORT = N("Rigenerazione del mana"),
 }
 
-local function tabItems(spec)
-    local L = {}
+local function fillItems(v, spec, _, class)
+    v:Begin()
     local w = spec.itemWeights
-    L[#L + 1] = title(T("Come valuto gli oggetti"))
+    v:Heading(T("Come valuto gli oggetti"))
     if not w then
-        L[#L + 1] = T("Per questa spec non ci sono ancora le regole sugli oggetti.")
-        return table.concat(L, "\n")
+        v:Para(T("Per questa spec non ci sono ancora le regole sugli oggetti."))
+        return v:End()
     end
-    L[#L + 1] = GREY .. T("Ogni statistica vale un numero di 'punti Agilita'': piu' e' alto, piu' conta.") .. END
-    L[#L + 1] = ""
-    L[#L + 1] = title(T("Cosa conta, in ordine"))
+    v:Para(T("Ogni statistica vale un numero di 'punti Agilita'': piu' e' alto, piu' conta."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
+
+    v:Heading(T("Cosa conta, in ordine"))
     local list = {}
     if (w.rangedDps or 0) > 0 then
-        list[#list + 1] = { T("DPS dell'arma a distanza (bacchetta)"), w.rangedDps }
+        -- the ranged weapon is a wand for the casters, a bow, crossbow or gun for the hunter, something else for the rest
+        local label = T("DPS dell'arma a distanza")
+        if class == "HUNTER" then
+            label = T("DPS dell'arma a distanza (arco, balestra, fucile)")
+        elseif class == "MAGE" or class == "PRIEST" or class == "WARLOCK" then
+            label = T("DPS dell'arma a distanza (bacchetta)")
+        end
+        list[#list + 1] = { label, w.rangedDps }
     end
     if (w.meleeDps or 0) > 0 then
         list[#list + 1] = { T("DPS dell'arma da mischia"), w.meleeDps }
@@ -210,36 +224,61 @@ local function tabItems(spec)
         end
     end
     table.sort(list, function(a, b)
-        return a[2] > b[2]
+        if a[2] ~= b[2] then
+            return a[2] > b[2]
+        end
+        return a[1] < b[1]
     end)
+    local rows = {}
     for i, e in ipairs(list) do
-        L[#L + 1] = i .. ".  " .. e[1] .. GREY .. "  " .. Lf("(vale %s)", string.format("%g", e[2])) .. END
+        rows[#rows + 1] = i .. ".  " .. e[1] .. GREY .. "  " .. Lf("(vale %s)", string.format("%g", e[2])) .. END
     end
+    v:Card({ lines = table.concat(rows, "\n"), bar = C_GREEN, bg = C_GREEN_BG })
+    local no = {}
     if (w.meleeDps or 0) == 0 then
-        L[#L + 1] = RED .. "-" .. END .. "  " .. T("DPS dell'arma da mischia") .. GREY .. "  " .. T("(non conta: conta solo cio' che da' in statistiche)") .. END
+        no[#no + 1] = RED .. "-" .. END .. "  " .. T("DPS dell'arma da mischia") .. GREY .. "  " .. T("(non conta: conta solo cio' che da' in statistiche)") .. END
     end
     if (w.rangedDps or 0) == 0 then
-        L[#L + 1] = RED .. "-" .. END .. "  " .. T("DPS dell'arma a distanza") .. GREY .. "  " .. T("(non conta per questa spec)") .. END
+        no[#no + 1] = RED .. "-" .. END .. "  " .. T("DPS dell'arma a distanza") .. GREY .. "  " .. T("(non conta per questa spec)") .. END
     end
-    L[#L + 1] = ""
-    L[#L + 1] = title(T("Il parere nel tooltip"))
+    if #no > 0 then
+        v:Card({ lines = table.concat(no, "\n"), bar = C_RED, bg = C_RED_BG })
+    end
+
+    v:Heading(T("Il parere nel tooltip"))
     local limit = tonumber(BuildBeastDB and BuildBeastDB.threshold) or 1
-    L[#L + 1] = GREEN .. GF.VerdictWord("SI") .. END .. ": " .. Lf("ti da' almeno %s punti in piu' di quello che indossi.", limit)
-    L[#L + 1] = RED .. GF.VerdictWord("NO") .. END .. ": " .. Lf("ne perdi almeno %s.", limit)
-    L[#L + 1] = "|cffffd933" .. GF.VerdictWord("SIMILE") .. "|r: " .. T("la differenza e' piccola.")
-    L[#L + 1] = GREEN .. T("Verde") .. END .. " = " .. T("cosa guadagni,") .. " " .. RED .. T("rosso") .. END .. " = " .. T("cosa perdi.")
-    L[#L + 1] = ""
-    L[#L + 1] = title(T("Incantamenti"))
-    L[#L + 1] = T("Li propone GearQuest (la riga gialla \"Recommended enchantment\" nel tooltip dell'oggetto).")
-    if spec.itemWeights.why then
-        L[#L + 1] = ""
-        L[#L + 1] = title(T("Perche'"))
-        L[#L + 1] = T(spec.itemWeights.why)
+    v:Card({ title = GREEN .. GF.VerdictWord("SI") .. END, lines = Lf("ti da' almeno %s punti in piu' di quello che indossi.", limit), bar = C_GREEN, bg = C_GREEN_BG })
+    v:Card({ title = RED .. GF.VerdictWord("NO") .. END, lines = Lf("ne perdi almeno %s.", limit), bar = C_RED, bg = C_RED_BG })
+    v:Card({ title = "|cffffd933" .. GF.VerdictWord("SIMILE") .. "|r", lines = T("la differenza e' piccola."), bar = { 1, 0.85, 0.2 }, bg = C_GOLD_BG })
+    v:Para(GREEN .. T("Verde") .. END .. " = " .. T("cosa guadagni,") .. " " .. RED .. T("rosso") .. END .. " = " .. T("cosa perdi."))
+
+    v:Heading(T("Incantamenti"))
+    v:Para(T("Li propone GearQuest (la riga gialla \"Recommended enchantment\" nel tooltip dell'oggetto)."))
+    if w.why then
+        v:Heading(T("Perche'"))
+        v:Card({ lines = T(w.why), bar = C_PLAIN, bg = C_PLAIN_BG })
     end
-    return table.concat(L, "\n")
+    return v:End()
 end
 
--- Tab: Addon ------------------------------------------------------------------------------------------------------------
+-- Macro
+local function fillMacros(v, _, _, class, specKey)
+    v:Begin()
+    local list = GF.macrosFor(class, specKey)
+    if #list == 0 then
+        v:Heading(T("Macro"))
+        v:Para(T("Per questa spec non ci sono macro suggerite."))
+        return v:End()
+    end
+    v:Heading(T("Macro suggerite per questa spec"))
+    v:Para(T("Il bottone qui sopra le crea nel gioco (con conferma). Poi le trovi in /macro e le trascini sulle barre. I nomi dei colpi sono quelli inglesi."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
+    for _, m in ipairs(list) do
+        v:Card({ title = m.name, lines = T(m.why) .. "\n" .. GREY .. m.body .. END, bar = C_GOLD, bg = C_GOLD_BG })
+    end
+    return v:End()
+end
+
+-- Guida and the addons that work with BuildBeast
 local function addonInfo(name)
     local loaded = false
     if C_AddOns and C_AddOns.IsAddOnLoaded then
@@ -256,66 +295,191 @@ local function addonInfo(name)
     return loaded, version
 end
 
-local function tabAddons()
-    local L = { title(T("Addon che lavorano con BuildBeast")), "" }
+local function fillGuide(v)
+    v:Begin()
+    for _, sec in ipairs(GF.GuideSections()) do
+        v:Heading(sec.head)
+        if sec.grey then
+            v:Para(sec.grey, GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
+        end
+        if sec.para then
+            v:Para(sec.para)
+        end
+        for _, text in ipairs(sec.cards or {}) do
+            v:Card({ lines = text, bar = C_GOLD, bg = C_GOLD_BG })
+        end
+    end
+
+    v:Heading(T("Addon che lavorano con BuildBeast"))
     local function entry(name, label, what)
         local loaded, version = addonInfo(name)
-        local state = loaded and (GREEN .. T("attivo") .. END) or (RED .. T("non trovato") .. END)
-        L[#L + 1] = WHITE .. T(label) .. END .. "  " .. state .. (version and (GREY .. "  " .. Lf("(versione %s)", version) .. END) or "")
-        L[#L + 1] = GREY .. T(what) .. END
-        L[#L + 1] = ""
+        v:Card({
+            title = T(label) .. (version and (GREY .. "  " .. Lf("(versione %s)", version) .. END) or ""),
+            tag = loaded and T("attivo") or T("non trovato"),
+            tagColor = loaded and C_GREEN or C_RED,
+            lines = T(what),
+            bar = loaded and C_GREEN or C_RED,
+            bg = loaded and C_GREEN_BG or C_RED_BG,
+        })
     end
     entry("Hekili", N("Hekili (consigliato)"), N("Calcola la rotazione. BuildBeast gli da' la sua priorita' e illumina i tasti. Senza Hekili non ci sono suggerimenti di abilita'."))
     entry("GearQuestForever", N("GearQuest Forever (consigliato)"), N("Suggerisce oggetti e incantamenti per livello. BuildBeast aggiunge il suo parere, e spiega il perche'."))
     entry("ZygorGuidesViewerForever", N("Zygor (facoltativo)"), N("Guida di zona e missioni. Se i suoi segni sui talenti ti disturbano, spegnili nelle Opzioni."))
-    L[#L + 1] = title(T("Traduzioni italiane"))
+
+    v:Heading(T("Traduzioni italiane"))
     local tr = GF.TranslationStatus and GF.TranslationStatus() or {}
-    L[#L + 1] = "Hekili: " .. tostring(tr.hekili or "?")
-    L[#L + 1] = "GearQuest: " .. tostring(tr.gq or "?")
-    L[#L + 1] = GREY .. T("Le porta BuildBeast, cosi' un aggiornamento di Hekili o di GearQuest non le cancella. Si accendono e si spengono nelle Opzioni (poi /reload).") .. END
-    return table.concat(L, "\n")
+    v:Card({ lines = "Hekili: " .. tostring(tr.hekili or "?") .. "\nGearQuest: " .. tostring(tr.gq or "?") .. "\n"
+        .. GREY .. T("Le porta BuildBeast, cosi' un aggiornamento di Hekili o di GearQuest non le cancella. Si accendono e si spengono nelle Opzioni (poi /reload).") .. END,
+        bar = C_BLUE, bg = C_BLUE_BG })
+    return v:End()
 end
 
--- Tab: Macro ------------------------------------------------------------------------------------------------------------
-local function tabMacros(class, specKey)
-    local list = GF.macrosFor(class, specKey)
-    if #list == 0 then
-        return title(T("Macro")) .. "\n" .. T("Per questa spec non ci sono macro suggerite.")
+-- the tabs drawn as cards: the ones that need the guide of the spec, and the ones that do not
+local SPEC_CARD_TABS = { livello = fillLevel, talenti = fillTalents, rotazione = fillRotation, oggetti = fillItems }
+local FREE_CARD_TABS = { macro = fillMacros, guida = fillGuide }
+
+local function cardView()
+    if not frame.cardView then
+        frame.cardView = GF.View.New(frame.content)
     end
-    local L = { title(T("Macro suggerite per questa spec")),
-        GREY .. T("Il bottone qui sopra le crea nel gioco (con conferma). Poi le trovi in /macro e le trascini sulle barre. I nomi dei colpi sono quelli inglesi.") .. END, "" }
-    for _, m in ipairs(list) do
-        L[#L + 1] = WHITE .. m.name .. END .. "  " .. T(m.why)
-        L[#L + 1] = GREY .. m.body .. END
-        L[#L + 1] = ""
-    end
-    return table.concat(L, "\n")
+    return frame.cardView
 end
 
 -- Tab: Razza -------------------------------------------------------------------------------------------------------------
-local TIER_COLOR = { "|cff33ff33", "|cff4aa3ff", "|cffcccccc" }
-local DIFFICULTY = { f = { "easy", GREEN }, m = { "medium", "|cffe0b030" }, d = { "hard", RED } }
+local TIER_RGB = { { 0.2, 1, 0.2 }, { 0.29, 0.64, 1 }, { 0.8, 0.8, 0.8 } }
+local TIER_BG = { { 0.09, 0.17, 0.11 }, { 0.09, 0.12, 0.19 }, { 0.13, 0.13, 0.15 } }
+local DIFFICULTY = { f = { "easy", 0.25, 0.83, 0.35 }, m = { "medium", 0.88, 0.69, 0.19 }, d = { "hard", 1, 0.42, 0.42 } }
+local RACE_W = GF.View.W -- refreshed at every fill (the window can be resized)
+local RACE_TOKEN = { Human = "hu", Dwarf = "dw", NightElf = "ne", Gnome = "gn", Orc = "or", Scourge = "un", Tauren = "ta", Troll = "tr" }
 
-local function tabRaces(class, specKey)
+local function newFS(parent, template)
+    return GF.View.NewFS(parent, template)
+end
+
+local function newBox(parent, r, g, b)
+    local box = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+    box:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8X8" })
+    box:SetBackdropColor(r or 0.1, g or 0.1, b or 0.13, 1)
+    return box
+end
+
+-- the frame that holds the Razza tab (cards instead of plain text), made once inside the scroll area
+local function raceView()
+    if frame.raceView then
+        return frame.raceView
+    end
+    local v = CreateFrame("Frame", nil, frame.content)
+    v:SetPoint("TOPLEFT", 0, 0)
+    v:SetSize(RACE_W, 10)
+    v.cards, v.heads = {}, {}
+    v:Hide()
+    frame.raceView = v
+    return v
+end
+
+local function lines(prefix, list)
+    local out = {}
+    for _, x in ipairs(list) do
+        out[#out + 1] = prefix .. T(x)
+    end
+    return table.concat(out, "\n")
+end
+
+-- fills the Razza tab for a class and spec; returns the height used
+local function fillRaceView(class, specKey)
+    RACE_W = GF.View.W
+    local v = raceView()
+    v:SetWidth(RACE_W)
     local lab = GF.RACE_LABELS
     local data = GF.RACE_SPECS and GF.RACE_SPECS[class] and GF.RACE_SPECS[class][specKey]
+    if v.head then
+        v.head:Hide()
+    end
+    for _, c in ipairs(v.cards) do
+        c:Hide()
+    end
+    for _, h in ipairs(v.heads) do
+        h:Hide()
+    end
     if not (lab and data) then
-        return title(T("Razza consigliata"))
+        v:SetHeight(10)
+        return 10
     end
-    local L = { "|T" .. data.icon .. ":30|t " .. title(T(lab.title)), "" }
+
+    -- panel with difficulty, what it does, pros and cons
+    local h = v.head
+    if not h then
+        h = newBox(v, 0.11, 0.11, 0.15)
+        h:SetWidth(RACE_W)
+        h.icon = h:CreateTexture(nil, "ARTWORK")
+        h.icon:SetSize(40, 40)
+        h.icon:SetPoint("TOPLEFT", 10, -10)
+        h.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+        h.title = newFS(h, "GameFontNormalLarge")
+        h.title:SetPoint("TOPLEFT", 60, -10)
+        h.diffLabel = newFS(h)
+        h.diffLabel:SetPoint("TOPLEFT", 60, -34)
+        h.badge = newBox(h)
+        h.badge:SetHeight(18)
+        h.badge:SetPoint("LEFT", h.diffLabel, "RIGHT", 8, 0)
+        h.badgeText = newFS(h.badge, "GameFontNormalSmall")
+        h.badgeText:SetPoint("CENTER", 0, 0)
+        h.summary = newFS(h)
+        h.summary:SetPoint("TOPLEFT", 10, -58)
+        h.summary:SetWidth(RACE_W - 20)
+        h.proT, h.pro = newFS(h, "GameFontNormal"), newFS(h)
+        h.conT, h.con = newFS(h, "GameFontNormal"), newFS(h)
+        h.pro:SetWidth(228)
+        h.con:SetWidth(228)
+        v.head = h
+    end
     local diff = DIFFICULTY[data.difficulty]
-    L[#L + 1] = T(lab.difficulty) .. ": " .. diff[2] .. T(lab[diff[1]]) .. END
-    L[#L + 1] = T(data.summary)
-    L[#L + 1] = ""
-    L[#L + 1] = GREEN .. T(lab.pros) .. END
-    for _, p in ipairs(data.pros) do
-        L[#L + 1] = "  + " .. T(p)
+    local colW = math.floor((RACE_W - 44) / 2)
+    h:SetWidth(RACE_W)
+    h.summary:SetWidth(RACE_W - 20)
+    h.pro:SetWidth(colW)
+    h.con:SetWidth(colW)
+    h.icon:SetTexture(data.icon)
+    h.title:SetText(T(lab.title))
+    h.diffLabel:SetText(T(lab.difficulty) .. ":")
+    h.badgeText:SetText(T(lab[diff[1]]))
+    h.badgeText:SetTextColor(0.06, 0.06, 0.06)
+    h.badge:SetBackdropColor(diff[2], diff[3], diff[4], 1)
+    h.badge:SetWidth(h.badgeText:GetStringWidth() + 16)
+    h.summary:SetText(T(data.summary))
+    local y = 58 + h.summary:GetStringHeight() + 12
+    h.proT:SetText(T(lab.pros))
+    h.proT:SetTextColor(0.25, 0.83, 0.35)
+    h.proT:ClearAllPoints()
+    h.proT:SetPoint("TOPLEFT", 10, -y)
+    h.pro:SetText(lines("+ ", data.pros))
+    h.pro:ClearAllPoints()
+    h.pro:SetPoint("TOPLEFT", 10, -(y + 18))
+    h.conT:SetText(T(lab.cons))
+    h.conT:SetTextColor(1, 0.42, 0.42)
+    h.conT:ClearAllPoints()
+    h.conT:SetPoint("TOPLEFT", 20 + colW, -y)
+    h.con:SetText(lines("- ", data.cons))
+    h.con:ClearAllPoints()
+    h.con:SetPoint("TOPLEFT", 20 + colW, -(y + 18))
+    local colH = math.max(h.pro:GetStringHeight(), h.con:GetStringHeight())
+    h:SetHeight(y + 18 + colH + 12)
+    h:ClearAllPoints()
+    h:SetPoint("TOPLEFT", v, "TOPLEFT", 0, 0)
+    h:Show()
+    local top = h:GetHeight() + 10
+
+    -- races of each faction, best first
+    local nh, nc = 0, 0
+    local ownFaction = BuildBeastDB and BuildBeastDB.raceOwnFaction and UnitFactionGroup and UnitFactionGroup("player")
+    local _, raceToken = UnitRace("player")
+    local ownRace = RACE_TOKEN[raceToken or ""]
+    local mineClass = (class == GF.playerClass())
+    local facs = { "H", "A" }
+    if ownFaction then
+        facs = { ownFaction == "Horde" and "H" or "A" }
     end
-    L[#L + 1] = RED .. T(lab.cons) .. END
-    for _, c in ipairs(data.cons) do
-        L[#L + 1] = "  - " .. T(c)
-    end
-    for _, fac in ipairs({ "H", "A" }) do
+    for _, fac in ipairs(facs) do
         local rows = {}
         for i, r in ipairs(data.races) do
             if GF.RACES[r[1]].faction == fac then
@@ -329,19 +493,77 @@ local function tabRaces(class, specKey)
             return a.i < b.i
         end)
         if #rows > 0 then
-            L[#L + 1] = ""
-            L[#L + 1] = title(T(fac == "H" and lab.horde or lab.alliance))
-            for _, row in ipairs(rows) do
-                local race = GF.RACES[row.r[1]]
-                L[#L + 1] = "|T" .. race.icon .. ":28|t " .. WHITE .. T(race.name) .. END .. "  "
-                    .. TIER_COLOR[row.r[2]] .. T(lab["tier" .. row.r[2]]) .. END
-                for _, n in ipairs(row.r[3]) do
-                    L[#L + 1] = GREY .. "    + " .. T(race.traits[n]) .. END
-                end
+            nh = nh + 1
+            local fs = v.heads[nh]
+            if not fs then
+                fs = newFS(v, "GameFontNormalLarge")
+                v.heads[nh] = fs
             end
+            fs:SetText(T(fac == "H" and lab.horde or lab.alliance))
+            fs:SetTextColor(fac == "H" and 1 or 0.35, fac == "H" and 0.35 or 0.6, fac == "H" and 0.3 or 1)
+            fs:ClearAllPoints()
+            fs:SetPoint("TOPLEFT", v, "TOPLEFT", 2, -top)
+            fs:Show()
+            top = top + 26
+            for _, row in ipairs(rows) do
+                nc = nc + 1
+                local c = v.cards[nc]
+                if not c then
+                    c = newBox(v)
+                    c:SetWidth(RACE_W)
+                    c.bar = c:CreateTexture(nil, "ARTWORK")
+                    c.bar:SetPoint("TOPLEFT", 0, 0)
+                    c.bar:SetPoint("BOTTOMLEFT", 0, 0)
+                    c.bar:SetWidth(4)
+                    c.ib = c:CreateTexture(nil, "BACKGROUND")
+                    c.ib:SetSize(44, 44)
+                    c.ib:SetPoint("TOPLEFT", 12, -8)
+                    c.ib:SetColorTexture(0.42, 0.35, 0.16, 1)
+                    c.icon = c:CreateTexture(nil, "ARTWORK")
+                    c.icon:SetSize(40, 40)
+                    c.icon:SetPoint("TOPLEFT", 14, -10)
+                    c.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+                    c.name = newFS(c, "GameFontNormalLarge")
+                    c.name:SetPoint("TOPLEFT", 68, -10)
+                    c.name:SetTextColor(1, 1, 1)
+                    c.tag = newFS(c, "GameFontNormalSmall")
+                    c.tag:SetPoint("LEFT", c.name, "RIGHT", 10, 0)
+                    c.mine = newFS(c, "GameFontNormalSmall")
+                    c.mine:SetPoint("TOPRIGHT", -12, -14)
+                    c.mine:SetTextColor(1, 0.82, 0)
+                    c.traits = newFS(c)
+                    c.traits:SetPoint("TOPLEFT", 68, -34)
+                    c.traits:SetWidth(RACE_W - 84)
+                    v.cards[nc] = c
+                end
+                c:SetWidth(RACE_W)
+                c.traits:SetWidth(RACE_W - 84)
+                local race = GF.RACES[row.r[1]]
+                local tier = row.r[2]
+                local rgb, bg = TIER_RGB[tier], TIER_BG[tier]
+                c:SetBackdropColor(bg[1], bg[2], bg[3], 1)
+                c.bar:SetColorTexture(rgb[1], rgb[2], rgb[3], 1)
+                c.icon:SetTexture(race.icon)
+                c.name:SetText(T(race.name))
+                c.tag:SetText(T(lab["tier" .. tier]))
+                c.tag:SetTextColor(rgb[1], rgb[2], rgb[3])
+                c.mine:SetText((mineClass and ownRace == row.r[1]) and ("* " .. T("LA TUA RAZZA")) or "")
+                local tl = {}
+                for _, n in ipairs(row.r[3]) do
+                    tl[#tl + 1] = race.traits[n]
+                end
+                c.traits:SetText(lines("+ ", tl))
+                c:SetHeight(math.max(62, 34 + c.traits:GetStringHeight() + 12))
+                c:ClearAllPoints()
+                c:SetPoint("TOPLEFT", v, "TOPLEFT", 0, -top)
+                c:Show()
+                top = top + c:GetHeight() + 6
+            end
+            top = top + 6
         end
     end
-    return table.concat(L, "\n")
+    v:SetHeight(top)
+    return top
 end
 
 -- Window ----------------------------------------------------------------------------------------------------------------
@@ -367,19 +589,25 @@ function GF.RefreshWindow()
     end
     local list = GF.SPECS[class] or {}
     local n = #list
-    local w = n > 0 and math.floor((526 - (n - 1) * 6) / n) or 100
+    local w = n > 0 and math.floor((frame:GetWidth() - 34 - (n - 1) * 6) / n) or 100
     for i, s in ipairs(list) do
         local b = frame.specButtons[i]
         if not b then
             b = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-            b:SetHeight(22)
+            b:SetHeight(26)
             frame.specButtons[i] = b
         end
         b:SetWidth(w)
         b:ClearAllPoints()
-        b:SetPoint("TOPLEFT", 16 + (i - 1) * (w + 6), -62)
+        b:SetPoint("TOPLEFT", 16 + (i - 1) * (w + 6), -60)
         local has = GF.DATA and GF.DATA[class] and GF.DATA[class][s[1]]
-        b:SetText((s[1] == specKey and "> " or "") .. s[2] .. ((has or raceMode) and "" or (" " .. T("(in arrivo)"))))
+        b:SetText(s[2] .. ((has or raceMode) and "" or (" " .. T("(in arrivo)"))))
+        if s[1] == specKey then
+            b:LockHighlight()
+        else
+            b:UnlockHighlight()
+        end
+        GF.FitButton(b)
         b:SetScript("OnClick", function()
             if raceMode then
                 raceSpec[class] = s[1]
@@ -402,33 +630,49 @@ function GF.RefreshWindow()
         frame.sub:SetText(classLabel .. " - " .. GF.specLabel(class, specKey) .. " - " .. Lf("livello %d", viewLevel) .. suffix)
     end
 
-    local text
-    if currentTab == "macro" then
-        text = tabMacros(class, specKey)
-    elseif raceMode then
-        text = tabRaces(class, specKey)
-    elseif currentTab == "guida" then
-        text = GF.GuideText() .. "\n" .. tabAddons()
-    elseif not spec then
+    frame.content:SetWidth(GF.View.W)
+    frame.text:SetWidth(GF.View.W)
+    cardView():SetWidth(GF.View.W)
+    -- what to draw: the Razza view, a tab made of cards, or (no guide for this spec) a short message
+    local cardFn = (not raceMode) and (FREE_CARD_TABS[currentTab] or (spec and SPEC_CARD_TABS[currentTab]))
+    local text = ""
+    if not raceMode and not cardFn then
         text = title(T("Guida non ancora disponibile")) .. "\n"
             .. Lf("Per %s la guida non c'e' ancora: il video da cui prendiamo i dati non ha una build per questa spec.", classLabel .. " " .. GF.specLabel(class, specKey))
-    elseif currentTab == "talenti" then
-        text = tabTalents(spec, mine)
-    elseif currentTab == "rotazione" then
-        text = tabRotation(spec, viewLevel)
-    elseif currentTab == "oggetti" then
-        text = tabItems(spec)
-    else
-        text = tabLevel(spec, viewLevel)
     end
     frame.text:SetText(text)
-    frame.content:SetHeight(math.max(10, frame.text:GetStringHeight() + 8))
+    local rv = raceView()
+    local cv = cardView()
+    rv:SetShown(raceMode)
+    cv:SetShown(cardFn and true or false)
+    frame.text:SetShown(not raceMode and not cardFn)
+    if raceMode then
+        frame.content:SetHeight(math.max(10, fillRaceView(class, specKey) + 8))
+    elseif cardFn then
+        frame.content:SetHeight(math.max(10, cardFn(cv, spec, viewLevel, class, specKey, mine) + 8))
+    else
+        frame.content:SetHeight(math.max(10, frame.text:GetStringHeight() + 8))
+    end
     frame.scroll:SetVerticalScroll(0)
 
     -- tabs and level buttons
-    for _, t in ipairs(frame.tabButtons) do
-        t.btn:SetText((t.key == currentTab) and ("> " .. T(t.label)) or T(t.label))
+    local tabW = math.floor((frame:GetWidth() - 34 - (#TABS - 1) * 4) / #TABS)
+    for i, t in ipairs(frame.tabButtons) do
+        t.btn:SetWidth(tabW)
+        t.btn:ClearAllPoints()
+        t.btn:SetPoint("TOPLEFT", 16 + (i - 1) * (tabW + 4), -92)
+        t.btn:SetText(T(t.label))
+        if t.key == currentTab then
+            t.btn:LockHighlight()
+        else
+            t.btn:UnlockHighlight()
+        end
+        GF.FitButton(t.btn)
+        t.btn:SetShown(not raceMode)
     end
+    frame.raceBack:SetText("< " .. T("Torna indietro"))
+    GF.FitButton(frame.raceBack)
+    frame.raceBack:SetShown(raceMode)
     local isOptions = (currentTab == "opzioni")
     frame.scroll:SetShown(not isOptions)
     frame.optScroll:SetShown(isOptions)
@@ -443,6 +687,12 @@ function GF.RefreshWindow()
     for _, b in ipairs(frame.raceNav) do
         b:SetShown(raceMode)
     end
+    frame.raceLabel:SetText(T("Classe") .. ": " .. classLabel)
+    frame.raceMine:SetText(T("La mia classe"))
+    GF.FitButton(frame.raceMine)
+    frame.raceFac:SetText((BuildBeastDB.raceOwnFaction and T("Tutte le fazioni")) or T("Solo la mia fazione"))
+    GF.FitButton(frame.raceFac)
+    frame.raceLabel:SetShown(raceMode)
     local showNav = (currentTab == "livello" or currentTab == "rotazione")
     for _, b in ipairs(frame.navButtons) do
         if showNav then
@@ -455,7 +705,16 @@ end
 
 local function build()
     local f = CreateFrame("Frame", "BuildBeastFrame", UIParent, "BackdropTemplate")
-    f:SetSize(560, 600)
+    local w0 = math.max(540, math.min(1400, tonumber(BuildBeastDB and BuildBeastDB.winW) or 640))
+    local h0 = math.max(480, math.min(1400, tonumber(BuildBeastDB and BuildBeastDB.winH) or 720))
+    f:SetSize(w0, h0)
+    GF.View.W = w0 - 64
+    f:SetResizable(true)
+    if f.SetResizeBounds then
+        f:SetResizeBounds(540, 480, 1400, 1400)
+    elseif f.SetMinResize then
+        f:SetMinResize(540, 480)
+    end
     f:SetPoint("CENTER")
     f:SetFrameStrata("DIALOG")
     f:SetBackdrop({
@@ -490,12 +749,15 @@ local function build()
 
     -- tabs
     f.tabButtons = {}
-    local tw = math.floor((526 - (#TABS - 1) * 4) / #TABS)
+    local tw = math.floor((606 - (#TABS - 1) * 4) / #TABS)
     for i, t in ipairs(TABS) do
         local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-        b:SetSize(tw, 24)
-        b:SetPoint("TOPLEFT", 16 + (i - 1) * (tw + 4), -90)
+        b:SetSize(tw, 28)
+        b:SetPoint("TOPLEFT", 16 + (i - 1) * (tw + 4), -92)
         b:SetScript("OnClick", function()
+            if t[1] == "razza" and currentTab ~= "razza" then
+                prevTab = currentTab
+            end
             currentTab = t[1]
             GF.RefreshWindow()
         end)
@@ -506,21 +768,21 @@ local function build()
     f.navButtons = {}
     local function nav(label, width, x, fn)
         local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-        b:SetSize(width, 22)
-        b:SetPoint("TOPLEFT", x, -120)
+        b:SetSize(width, 26)
+        b:SetPoint("TOPLEFT", x, -128)
         b:SetText(label)
         b:SetScript("OnClick", fn)
         f.navButtons[#f.navButtons + 1] = b
     end
-    nav("<", 36, 16, function()
+    nav("<", 40, 16, function()
         viewLevel = (viewLevel or UnitLevel("player") or 1) - 1
         GF.RefreshWindow()
     end)
-    nav(">", 36, 56, function()
+    nav(">", 40, 60, function()
         viewLevel = (viewLevel or UnitLevel("player") or 1) + 1
         GF.RefreshWindow()
     end)
-    nav(T("Il mio livello"), 110, 96, function()
+    nav(T("Il mio livello"), 150, 104, function()
         viewLevel = UnitLevel("player") or 1
         GF.RefreshWindow()
     end)
@@ -539,21 +801,68 @@ local function build()
         raceClass = CLASS_ORDER[((idx - 1 + delta) % #CLASS_ORDER) + 1]
         GF.RefreshWindow()
     end
-    for i, def in ipairs({ { "<", -1, 16 }, { ">", 1, 56 } }) do
+    for i, def in ipairs({ { "<", -1, 16 }, { ">", 1, 254 } }) do
         local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-        b:SetSize(36, 22)
-        b:SetPoint("TOPLEFT", def[3], -120)
+        b:SetSize(40, 26)
+        b:SetPoint("TOPLEFT", def[3], -128)
         b:SetText(def[1])
         b:SetScript("OnClick", function()
             raceStep(def[2])
         end)
+        b:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+            GameTooltip:SetText(def[2] < 0 and T("Classe precedente") or T("Classe successiva"))
+            GameTooltip:Show()
+        end)
+        b:SetScript("OnLeave", function()
+            GameTooltip:Hide()
+        end)
         b:Hide()
         f.raceNav[#f.raceNav + 1] = b
     end
+    local mine = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+    mine:SetSize(140, 26)
+    mine:SetPoint("TOPLEFT", 300, -128)
+    mine:SetScript("OnClick", function()
+        raceClass = nil
+        GF.RefreshWindow()
+    end)
+    mine:Hide()
+    f.raceMine = mine
+    f.raceNav[#f.raceNav + 1] = mine
+    local facBtn = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+    facBtn:SetSize(162, 26)
+    facBtn:SetPoint("TOPLEFT", 444, -128)
+    facBtn:SetScript("OnClick", function()
+        BuildBeastDB.raceOwnFaction = not BuildBeastDB.raceOwnFaction
+        GF.RefreshWindow()
+    end)
+    facBtn:Hide()
+    f.raceFac = facBtn
+    f.raceNav[#f.raceNav + 1] = facBtn
+
+    -- back button of the Razza tab (the tabs are hidden there, so only the class arrows and the specs stay)
+    local back = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+    back:SetSize(200, 28)
+    back:SetPoint("TOPLEFT", 16, -92)
+    back:SetScript("OnClick", function()
+        currentTab = prevTab or "livello"
+        GF.RefreshWindow()
+    end)
+    back:Hide()
+    f.raceBack = back
+
+    -- what the arrows change: "Class: Hunter", between the two arrows
+    local rl = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    rl:SetPoint("TOPLEFT", 60, -134)
+    rl:SetSize(190, 14)
+    rl:SetJustifyH("CENTER")
+    rl:Hide()
+    f.raceLabel = rl
 
     local mb = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-    mb:SetSize(220, 22)
-    mb:SetPoint("TOPLEFT", 16, -120)
+    mb:SetSize(260, 26)
+    mb:SetPoint("TOPLEFT", 16, -128)
     mb:SetText(T("Crea le macro di questa spec"))
     mb:SetScript("OnClick", function()
         GF.CreateMacros()
@@ -562,30 +871,31 @@ local function build()
     f.macroBtn = mb
 
     local scroll = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate")
-    scroll:SetPoint("TOPLEFT", 16, -150)
+    scroll:SetPoint("TOPLEFT", 16, -166)
     scroll:SetPoint("BOTTOMRIGHT", -34, 44)
     local content = CreateFrame("Frame", nil, scroll)
-    content:SetSize(496, 10)
+    content:SetSize(GF.View.W, 10)
     scroll:SetScrollChild(content)
     local text = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     text:SetPoint("TOPLEFT", 0, 0)
-    text:SetWidth(496)
+    text:SetWidth(GF.View.W)
+    GF.View.Track(text, "GameFontHighlight")
     text:SetJustifyH("LEFT")
     text:SetJustifyV("TOP")
     f.text, f.scroll, f.content = text, scroll, content
 
     -- the Opzioni tab: its own scroll area with the check boxes of Options.lua
     local optScroll = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate")
-    optScroll:SetPoint("TOPLEFT", 16, -122)
+    optScroll:SetPoint("TOPLEFT", 16, -130)
     optScroll:SetPoint("BOTTOMRIGHT", -34, 44)
     local optContent = CreateFrame("Frame", nil, optScroll)
-    optContent:SetSize(456, 10)
+    optContent:SetSize(GF.View.W, 10)
     optScroll:SetScrollChild(optContent)
     f.optScroll = optScroll
     optScroll:Hide()
     GF.BuildOptionsInto(optContent)
 
-    -- size of the interface: + and - at the bottom (scales the whole window, text and icons included)
+    -- size of the text: + and - at the bottom (only the letters change, not the window)
     local sizeLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     sizeLabel:SetPoint("BOTTOMLEFT", 16, 18)
     sizeLabel:SetText(T("Dimensione"))
@@ -610,13 +920,56 @@ local function build()
         pct:SetText(string.format("%d%%", math.floor(GF.GetScale() * 100 + 0.5)))
     end
     GF.RefreshScaleLabel()
-    f:SetScale(GF.GetScale())
+    f:SetScale(1)
+    GF.ApplyDarkBackground(f)
     if GF.ApplyFonts then
         C_Timer.After(0, function()
             GF.ApplyFonts(f)
         end)
     end
     f:SetClampedToScreen(true)
+
+    -- drag the right edge, the bottom edge or the corner to resize the window; the size is remembered
+    local function grip(point, w, h, a1, a2)
+        local g = CreateFrame("Frame", nil, f)
+        g:SetFrameLevel(f:GetFrameLevel() + 20)
+        g:EnableMouse(true)
+        if w then
+            g:SetWidth(w)
+        end
+        if h then
+            g:SetHeight(h)
+        end
+        g:SetPoint(a1[1], f, a1[2], a1[3], a1[4])
+        if a2 then
+            g:SetPoint(a2[1], f, a2[2], a2[3], a2[4])
+        end
+        g:SetScript("OnMouseDown", function()
+            f:StartSizing(point)
+        end)
+        g:SetScript("OnMouseUp", function()
+            f:StopMovingOrSizing()
+            BuildBeastDB.winW, BuildBeastDB.winH = math.floor(f:GetWidth() + 0.5), math.floor(f:GetHeight() + 0.5)
+        end)
+        return g
+    end
+    grip("RIGHT", 8, nil, { "TOPRIGHT", "TOPRIGHT", 0, -40 }, { "BOTTOMRIGHT", "BOTTOMRIGHT", 0, 20 })
+    grip("BOTTOM", nil, 8, { "BOTTOMLEFT", "BOTTOMLEFT", 20, 0 }, { "BOTTOMRIGHT", "BOTTOMRIGHT", -20, 0 })
+    local corner = grip("BOTTOMRIGHT", 20, 20, { "BOTTOMRIGHT", "BOTTOMRIGHT", 0, 0 })
+    corner:SetFrameLevel(f:GetFrameLevel() + 25)
+    corner.tex = corner:CreateTexture(nil, "OVERLAY")
+    corner.tex:SetAllPoints()
+    corner.tex:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+    f:SetScript("OnSizeChanged", function(self, w)
+        GF.View.W = math.max(300, math.floor(w - 64))
+        if not self.resizeQueued then
+            self.resizeQueued = true
+            C_Timer.After(0.05, function()
+                self.resizeQueued = false
+                GF.RefreshWindow()
+            end)
+        end
+    end)
 
     f:SetScript("OnShow", function()
         if GF.ScanTalentIcons then

@@ -86,6 +86,43 @@ local function weaponDps(link, stats)
     return 0
 end
 
+-- Can your character use the item? The game itself paints in red, in the tooltip, the armor type, the weapon type or the
+-- class line you cannot use, so we read that (it follows the real rules of the server, level gates included). A red
+-- "Requires Level N" line is not counted: the item is only for later, not for a different class.
+local usableCache = {}
+local function cantUse(link)
+    if usableCache[link] ~= nil then
+        return usableCache[link]
+    end
+    scan = scan or CreateFrame("GameTooltip", "BuildBeastScan", nil, "GameTooltipTemplate")
+    scan:SetOwner(UIParent, "ANCHOR_NONE")
+    scan:ClearLines()
+    scan:SetHyperlink(link)
+    local lines = scan:NumLines() or 0
+    local minLevel = select(5, (C_Item and C_Item.GetItemInfo or GetItemInfo)(link))
+    local level = UnitLevel("player") or 1
+    local bad = false
+    for i = 2, lines do
+        for _, side in ipairs({ "Left", "Right" }) do
+            local fs = _G["BuildBeastScanText" .. side .. i]
+            local text = fs and fs:GetText()
+            if text and text ~= "" then
+                local r, g, b = fs:GetTextColor()
+                if r and r > 0.9 and g < 0.3 and b < 0.3 then
+                    local onlyLevel = minLevel and minLevel > level and text:find(tostring(minLevel), 1, true)
+                    if not onlyLevel then
+                        bad = true
+                    end
+                end
+            end
+        end
+    end
+    if lines >= 3 then
+        usableCache[link] = bad -- the tooltip is complete: remember it (a half-loaded one is read again next time)
+    end
+    return bad
+end
+
 -- score of an item in a slot, and its parts (stat key -> value, "dps" -> dps)
 local function scoreOf(link, slot, w)
     local stats = itemStats(link)
@@ -139,6 +176,9 @@ local function judge(link)
     end
     if IsEquippedItem and IsEquippedItem(link) then
         return nil
+    end
+    if cantUse(link) then
+        return "NO", { 1, 0.25, 0.25 }, { red(T("Non puoi usarlo: il gioco lo segna in rosso (armatura o arma che la tua classe non puo' usare).")) }
     end
     local slotUsed, kind = slots[1], nil
     -- the worst item you wear among the possible slots is the one it would replace

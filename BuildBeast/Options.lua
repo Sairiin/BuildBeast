@@ -199,6 +199,11 @@ local OPTIONS = {
         min = 0.5, max = 10, by = 0.5,
     },
     {
+        styles = true,
+        label = N("Stile del parere"),
+        desc = N("Come appare il parere nel tooltip: a parole, con simboli (+ - =), con spunte o con frecce."),
+    },
+    {
         label = N("Spiega il perche'"),
         desc = N("Sotto il parere scrive cosa guadagni e cosa perdi, e perche' per la tua spec conta o no."),
         get = function() return get("why", true) end,
@@ -243,6 +248,12 @@ local OPTIONS = {
         desc = N("Un riquadro piccolo sempre sullo schermo con il prossimo talento da prendere. Lo sposti trascinandolo."),
         get = function() return get("quick", true) end,
         set = function(v) GF.SetQuickShown(v) end,
+    },
+    {
+        label = N("Sfondo scuro"),
+        desc = N("Un fondo scuro e pieno (senza trasparenza) per la finestra e il pannello rapido, per leggere meglio."),
+        get = function() return get("darkBg", true) end,
+        set = function(v) GF.SetDarkBackground(v) end,
     },
     {
         label = N("Pulsante sulla minimappa"),
@@ -340,6 +351,42 @@ function GF.BuildOptionsInto(parent)
                 local cur = (BuildBeastDB and BuildBeastDB.lang) or "auto"
                 for code, e in pairs(btns) do
                     e.b:SetText((code == cur and "> " or "") .. e.label)
+                end
+            end }
+        elseif o.styles then
+            local label = parent:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+            label:SetPoint("TOPLEFT", parent, "TOPLEFT", 4, y - 2)
+            label:SetText(T(o.label))
+            y = y - 24
+            local btns = {}
+            for i, key in ipairs({ "text", "symbol", "check", "arrow" }) do
+                local col, row = (i - 1) % 2, math.floor((i - 1) / 2)
+                local b = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
+                b:SetSize(212, 26)
+                b:SetPoint("TOPLEFT", parent, "TOPLEFT", 4 + col * 218, y - row * 30)
+                b:SetText(GF.VerdictPreview(key))
+                b:SetScript("OnClick", function()
+                    BuildBeastDB.verdictStyle = key
+                    GF.RefreshOptions()
+                end)
+                btns[key] = b
+            end
+            y = y - 62
+            local d = parent:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+            d:SetPoint("TOPLEFT", parent, "TOPLEFT", 4, y)
+            d:SetWidth(440)
+            d:SetJustifyH("LEFT")
+            d:SetText(T(o.desc or ""))
+            y = y - (d:GetStringHeight() + 12)
+            rows[#rows + 1] = { upd = function()
+                local cur = (BuildBeastDB and BuildBeastDB.verdictStyle) or "text"
+                for key, b in pairs(btns) do
+                    b:SetText(GF.VerdictPreview(key))
+                    if key == cur then
+                        b:LockHighlight()
+                    else
+                        b:UnlockHighlight()
+                    end
                 end
             end }
         elseif o.header then
