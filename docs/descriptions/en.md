@@ -9,6 +9,8 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 - **Item verdict** in the tooltip: YES / NO / SIMILAR against what you wear, with the reason, green and red stats, the suggested enchant and arrows on bag icons. Threshold adjustable.
 - **Macros** for every spec, created in the game with one button.
 - **Race guide** (new): which race suits each class and spec, with difficulty (easy / medium / hard), what it does, pros and cons. Works for any class, so you can plan your next character.
+- **Clean card layout** in every tab, a window you can resize by dragging its edge, text-size buttons (+ / -) and an optional dark background.
+- **Verdict style** to taste: words, symbols (+ - =), check marks or arrows. Items your class cannot use are marked NO.
 - **Quick panel** with the next talent and a message at every level up.
 - **10 languages** (it, en, es, de, fr, pt, ru, ko, zh-CN, zh-TW), auto-detected, changeable in Options. Resizable interface.
 - All 9 classes, 27 specs (Holy Paladin: coming soon). Optional: Hekili, GearQuest Forever.

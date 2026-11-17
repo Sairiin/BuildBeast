@@ -9,6 +9,8 @@ Saiba sempre o que fazer em cada nível. O BuildBeast diz qual talento escolher,
 - **Opinião sobre itens** na dica de ferramenta: SIM / NÃO / PARECIDO em relação ao que você veste, com o motivo, atributos em verde e vermelho, encantamento sugerido e setas nos ícones da bolsa. Limite ajustável.
 - **Macros** para cada especialização, criadas no jogo com um botão.
 - **Guia de raça** (novo): qual raça combina com cada classe e especialização, com dificuldade (fácil / média / difícil), o que faz, prós e contras. Funciona com qualquer classe, para planejar seu próximo personagem.
+- **Layout em cartões** claro em cada aba, janela que se redimensiona arrastando a borda, botões de tamanho do texto (+ / -) e fundo escuro opcional.
+- **Estilo do parecer** à escolha: palavras, símbolos (+ - =), vistos ou setas. Itens que sua classe não pode usar são marcados como NÃO.
 - **Painel rápido** com o próximo talento e uma mensagem a cada nível.
 - **10 idiomas**, detectados automaticamente e alteráveis nas Opções. Interface redimensionável.
 - 9 classes, 27 especializações (Paladino Sagrado: em breve). Opcional: Hekili, GearQuest Forever.

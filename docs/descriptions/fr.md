@@ -9,6 +9,8 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 - **Avis sur les objets** dans l'infobulle : OUI / NON / SIMILAIRE par rapport à ce que vous portez, avec la raison, caractéristiques en vert et rouge, enchantement suggéré et flèches sur les icônes des sacs. Seuil réglable.
 - **Macros** pour chaque spécialisation, créées dans le jeu en un clic.
 - **Guide des races** (nouveau) : quelle race convient à chaque classe et spécialisation, avec la difficulté (facile / moyenne / difficile), ce qu'elle fait, avantages et inconvénients. Fonctionne pour toutes les classes, pour préparer votre prochain personnage.
+- **Présentation en cartes** claire dans chaque onglet, fenêtre redimensionnable en tirant son bord, boutons de taille du texte (+ / -) et fond sombre facultatif.
+- **Style de l'avis** au choix : mots, symboles (+ - =), coches ou flèches. Les objets que ta classe ne peut pas utiliser sont marqués NON.
 - **Panneau rapide** avec le prochain talent et un message à chaque montée de niveau.
 - **10 langues**, détection automatique, modifiable dans les Options. Interface redimensionnable.
 - 9 classes, 27 spécialisations (Paladin Sacré : bientôt). Facultatif : Hekili, GearQuest Forever.

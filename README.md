@@ -28,6 +28,8 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 - **Item verdict** in the tooltip: YES / NO / SIMILAR against what you wear, with the reason, green and red stats, the suggested enchant and arrows on bag icons. Threshold adjustable.
 - **Macros** for every spec, created in the game with one button.
 - **Race guide** (new): which race suits each class and spec, with difficulty (easy / medium / hard), what it does, pros and cons. Works for any class, so you can plan your next character.
+- **Clean card layout** in every tab, a window you can resize by dragging its edge, text-size buttons (+ / -) and an optional dark background.
+- **Verdict style** to taste: words, symbols (+ - =), check marks or arrows. Items your class cannot use are marked NO.
 - **Quick panel** with the next talent and a message at every level up.
 - **10 languages** (it, en, es, de, fr, pt, ru, ko, zh-CN, zh-TW), auto-detected, changeable in Options. Resizable interface.
 - All 9 classes, 27 specs (Holy Paladin: coming soon). Optional: Hekili, GearQuest Forever.
@@ -50,6 +52,8 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 - **Parere sugli oggetti** nel tooltip: SÌ / NO / SIMILE rispetto a quello che indossi, con il perché, statistiche verdi e rosse, incantamento suggerito e frecce sulle icone della borsa. Soglia regolabile.
 - **Macro** per ogni spec, create nel gioco con un bottone.
 - **Guida alla razza** (novità): quale razza conviene per ogni classe e specializzazione, con difficoltà (facile / media / difficile), cosa fa, pro e contro. Funziona per qualsiasi classe, così puoi pianificare il prossimo personaggio.
+- **Schede a riquadri** chiare in ogni sezione, finestra ridimensionabile trascinando il bordo, tasti per la dimensione del testo (+ / -) e sfondo scuro opzionale.
+- **Stile del parere** a scelta: parole, simboli (+ - =), spunte o frecce. Gli oggetti che la tua classe non può usare sono segnati NO.
 - **Pannello rapido** con il prossimo talento e un messaggio a ogni livello.
 - **10 lingue**, rilevate in automatico e cambiabili nelle Opzioni. Interfaccia ridimensionabile.
 - Tutte le 9 classi, 27 spec (Paladino Holy: in arrivo). Facoltativi: Hekili, GearQuest Forever.
@@ -72,6 +76,8 @@ Sabe siempre qué hacer en cada nivel. BuildBeast te dice qué talento elegir, q
 - **Opinión sobre objetos** en el tooltip: SÍ / NO / PARECIDO respecto a lo que llevas, con el porqué, estadísticas en verde y rojo, encantamiento sugerido y flechas en los iconos de la bolsa. Umbral ajustable.
 - **Macros** para cada especialización, creadas en el juego con un botón.
 - **Guía de raza** (novedad): qué raza conviene para cada clase y especialización, con dificultad (fácil / media / difícil), qué hace, pros y contras. Funciona con cualquier clase, para planificar tu próximo personaje.
+- **Diseño en tarjetas** claro en cada pestaña, ventana que se redimensiona arrastrando el borde, botones de tamaño de texto (+ / -) y fondo oscuro opcional.
+- **Estilo del veredicto** a tu gusto: palabras, símbolos (+ - =), marcas o flechas. Los objetos que tu clase no puede usar se marcan NO.
 - **Panel rápido** con el próximo talento y un mensaje al subir de nivel.
 - **10 idiomas**, detección automática y cambio en Opciones. Interfaz redimensionable.
 - 9 clases, 27 especializaciones (Paladín Holy: próximamente). Opcional: Hekili, GearQuest Forever.
@@ -94,6 +100,8 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 - **Gegenstandsurteil** im Tooltip: JA / NEIN / ÄHNLICH im Vergleich zu deiner Ausrüstung, mit Begründung, grünen und roten Werten, empfohlener Verzauberung und Pfeilen auf den Taschensymbolen. Schwelle einstellbar.
 - **Makros** für jede Spezialisierung, mit einem Klick im Spiel erstellt.
 - **Volks-Ratgeber** (neu): welches Volk zu jeder Klasse und Spezialisierung passt, mit Schwierigkeit (einfach / mittel / schwer), Beschreibung, Vor- und Nachteilen. Funktioniert für jede Klasse, so kannst du deinen nächsten Charakter planen.
+- **Übersichtliche Karten** in jedem Tab, ein Fenster, dessen Größe du am Rand ziehst, Tasten für die Textgröße (+ / -) und ein optionaler dunkler Hintergrund.
+- **Stil des Urteils** nach Wunsch: Wörter, Symbole (+ - =), Häkchen oder Pfeile. Gegenstände, die deine Klasse nicht nutzen kann, werden mit NEIN markiert.
 - **Schnellfeld** mit dem nächsten Talent und einer Nachricht bei jedem Stufenaufstieg.
 - **10 Sprachen**, automatisch erkannt, in den Optionen änderbar. Skalierbare Oberfläche.
 - 9 Klassen, 27 Spezialisierungen (Heilig-Paladin: bald). Optional: Hekili, GearQuest Forever.
@@ -116,6 +124,8 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 - **Avis sur les objets** dans l'infobulle : OUI / NON / SIMILAIRE par rapport à ce que vous portez, avec la raison, caractéristiques en vert et rouge, enchantement suggéré et flèches sur les icônes des sacs. Seuil réglable.
 - **Macros** pour chaque spécialisation, créées dans le jeu en un clic.
 - **Guide des races** (nouveau) : quelle race convient à chaque classe et spécialisation, avec la difficulté (facile / moyenne / difficile), ce qu'elle fait, avantages et inconvénients. Fonctionne pour toutes les classes, pour préparer votre prochain personnage.
+- **Présentation en cartes** claire dans chaque onglet, fenêtre redimensionnable en tirant son bord, boutons de taille du texte (+ / -) et fond sombre facultatif.
+- **Style de l'avis** au choix : mots, symboles (+ - =), coches ou flèches. Les objets que ta classe ne peut pas utiliser sont marqués NON.
 - **Panneau rapide** avec le prochain talent et un message à chaque montée de niveau.
 - **10 langues**, détection automatique, modifiable dans les Options. Interface redimensionnable.
 - 9 classes, 27 spécialisations (Paladin Sacré : bientôt). Facultatif : Hekili, GearQuest Forever.
@@ -138,6 +148,8 @@ Saiba sempre o que fazer em cada nível. O BuildBeast diz qual talento escolher,
 - **Opinião sobre itens** na dica de ferramenta: SIM / NÃO / PARECIDO em relação ao que você veste, com o motivo, atributos em verde e vermelho, encantamento sugerido e setas nos ícones da bolsa. Limite ajustável.
 - **Macros** para cada especialização, criadas no jogo com um botão.
 - **Guia de raça** (novo): qual raça combina com cada classe e especialização, com dificuldade (fácil / média / difícil), o que faz, prós e contras. Funciona com qualquer classe, para planejar seu próximo personagem.
+- **Layout em cartões** claro em cada aba, janela que se redimensiona arrastando a borda, botões de tamanho do texto (+ / -) e fundo escuro opcional.
+- **Estilo do parecer** à escolha: palavras, símbolos (+ - =), vistos ou setas. Itens que sua classe não pode usar são marcados como NÃO.
 - **Painel rápido** com o próximo talento e uma mensagem a cada nível.
 - **10 idiomas**, detectados automaticamente e alteráveis nas Opções. Interface redimensionável.
 - 9 classes, 27 especializações (Paladino Sagrado: em breve). Opcional: Hekili, GearQuest Forever.
@@ -160,6 +172,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - **Оценка предметов** в подсказке: ДА / НЕТ / ПОХОЖЕ по сравнению с надетым, с причиной, зелёными и красными характеристиками, предлагаемыми чарами и стрелками на значках в сумках. Порог настраивается.
 - **Макросы** для каждой специализации, создаются в игре одной кнопкой.
 - **Гид по расам** (новое): какая раса подходит каждому классу и специализации, со сложностью (легко / средне / сложно), описанием, плюсами и минусами. Работает для любого класса, чтобы спланировать следующего персонажа.
+- **Понятные карточки** на каждой вкладке, окно, размер которого меняется перетаскиванием края, кнопки размера текста (+ / -) и необязательный тёмный фон.
+- **Стиль оценки** на выбор: слова, символы (+ - =), галочки или стрелки. Предметы, которые ваш класс не может использовать, помечаются как НЕТ.
 - **Быстрая панель** со следующим талантом и сообщение при каждом новом уровне.
 - **10 языков**, определяются автоматически, меняются в Настройках. Масштабируемый интерфейс.
 - 9 классов, 27 специализаций (Свет у паладина: скоро). Дополнительно: Hekili, GearQuest Forever.
@@ -182,6 +196,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - 툴팁의 **아이템 평가**: 착용 중인 것과 비교해 예 / 아니오 / 비슷함, 이유, 초록·빨강 능력치, 추천 마법부여, 가방 아이콘 화살표. 기준값 조절 가능.
 - 전문화별 **매크로**를 버튼 하나로 게임에 생성.
 - **종족 가이드** (신규): 클래스와 전문화별로 어울리는 종족을 난이도(쉬움 / 보통 / 어려움), 특징, 장단점과 함께 보여 줍니다. 모든 클래스에서 작동하므로 다음 캐릭터를 계획할 수 있습니다.
+- 모든 탭에 보기 쉬운 **카드 형태**, 가장자리를 끌어 크기를 바꾸는 창, 글자 크기 버튼(+ / -), 선택형 어두운 배경.
+- **평가 표시 방식** 선택: 글자, 기호(+ - =), 체크 표시 또는 화살표. 내 직업이 쓸 수 없는 아이템은 '아니오'로 표시됩니다.
 - 다음 특성을 보여 주는 **빠른 패널**과 레벨업 때마다 메시지.
 - **10개 언어**, 자동 감지, 설정에서 변경. 크기 조절 가능한 인터페이스.
 - 9개 직업, 27개 전문화 (성기사 신성: 준비 중). 선택: Hekili, GearQuest Forever.
@@ -204,6 +220,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - 提示框中的**物品评价**：与你穿戴的相比为 是 / 否 / 相近，附原因、绿色和红色属性、推荐附魔以及背包图标上的箭头。阈值可调。
 - 为每个专精提供**宏**，一键在游戏中创建。
 - **种族指南**（新）：每个职业和专精适合哪个种族，包含难度（简单 / 中等 / 困难）、特点、优点和缺点。适用于任何职业，方便规划下一个角色。
+- 每个标签页都有清晰的**卡片式布局**，可拖动边缘调整窗口大小，带文字大小按钮（+ / -），并可选深色背景。
+- **评价样式**可选：文字、符号（+ - =）、对勾或箭头。你的职业无法使用的物品会标为“否”。
 - 显示下一个天赋的**快捷面板**，并在每次升级时提示。
 - **10种语言**，自动检测，可在选项中更改。界面可缩放。
 - 9个职业，27个专精（神圣圣骑士：即将推出）。可选：Hekili、GearQuest Forever。
@@ -226,6 +244,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - 提示框中的**物品評價**：與你穿戴的相比為 是 / 否 / 相近，附原因、綠色和紅色屬性、推薦附魔以及背包圖示上的箭頭。閾值可調。
 - 為每個專精提供**巨集**，一鍵在遊戲中建立。
 - **種族指南**（新）：每個職業和專精適合哪個種族，包含難度（簡單 / 中等 / 困難）、特點、優點和缺點。適用於任何職業，方便規劃下一個角色。
+- 每個分頁都有清晰的**卡片式版面**，可拖曳邊緣調整視窗大小，附文字大小按鈕（+ / -），並可選深色背景。
+- **評價樣式**可選：文字、符號（+ - =）、勾號或箭頭。你的職業無法使用的物品會標為「否」。
 - 顯示下一個天賦的**快捷面板**，並在每次升級時提示。
 - **10種語言**，自動偵測，可在選項中更改。介面可縮放。
 - 9個職業，27個專精（神聖聖騎士：即將推出）。選用：Hekili、GearQuest Forever。
