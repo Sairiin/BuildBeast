@@ -1,6 +1,6 @@
 -- BuildBeast (c) 2026 Sairiin. All rights reserved. Copying, modification or redistribution of this code is forbidden without written permission.
 -- BuildBeast: macros suggested for each build. The window shows them (tab "Macro") and a button
--- creates them in the game, after a confirmation. Names start with "GL " so they are easy to find and to update.
+-- creates them in the game, after a confirmation. Names start with "BB " so they are easy to find and to update.
 -- Spell names in the macro text are the English ones (that is what the WoW Forever client uses).
 
 local ADDON, GF = ...
@@ -73,7 +73,7 @@ def("r_pick", "GL Borseggio", "Pick Pocket come apertura, poi Garrote (puoi camb
 -- Shaman
 def("s_attack", "GL Attacco", "Mandi all'attacco pet e personaggio con un solo tasto: cosi' non resti fermo mentre sali.",
     "/petattack", "/startattack")
-def("s_storm", "GL Stormstrike", "Come GL Attacco, ma lancia anche Stormstrike (al posto della macro precedente).",
+def("s_storm", "GL Stormstrike", "Come BB Attacco, ma lancia anche Stormstrike (al posto della macro precedente).",
     "#showtooltip", "/petattack", "/startattack", "/cast Stormstrike")
 def("s_proj", "GL Proiezione", "Totemic Projection dove si trova il cursore.",
     "#showtooltip", "/cast [@cursor] Totemic Projection")
@@ -129,6 +129,65 @@ def("d_taunt", "GL Provoca", "Growl sul focus, poi sul cursore, poi sul bersagli
     "#showtooltip", "/cast [@focus,harm,nodead] Growl; [@mouseover,harm,nodead] Growl; Growl")
 def("d_ns", "GL Swift+Touch", "Nature's Swiftness e subito Healing Touch: cura d'emergenza istantanea (esce dalla forma e ferma il lancio).",
     "#showtooltip", "/stopcasting", "/stopattack", "/cancelform [noform:0]", "/use Nature's Swiftness", "/use Healing Touch")
+
+-- New names (a macro name holds 16 characters at most) and a picture for each macro (the name of a game icon). `old` is
+-- the name it had before ("GL ..."): a macro that already exists under the old name is renamed, not duplicated.
+local LOOK = {
+    h_autoshot = { "BB Tiro Continuo", "ability_whirlwind" },
+    h_mark = { "BB Marchio+Pet", "ability_hunter_snipershot" },
+    h_melee_bm = { "BB Mischia", "ability_meleedamage" },
+    h_melee_sv = { "BB Mischia", "ability_meleedamage" },
+    h_counter = { "BB Contrattacco", "ability_warrior_challange" },
+    w_start = { "BB Attacca", "ability_rogue_ambush" },
+    w_sunder = { "BB Sunder Mouse", "ability_warrior_sunder" },
+    p_bop = { "BB Protezione", "spell_holy_sealofprotection" },
+    p_bof = { "BB Liberta'", "spell_holy_sealofvalor" },
+    p_cleanse = { "BB Purifica", "spell_holy_renew" },
+    p_dummy = { "BB Manichino", "inv_misc_gear_01" },
+    p_bubble = { "BB Bolla", "spell_holy_divineintervention" },
+    p_holystrike = { "BB Holy Strike", "spell_holy_sealofmight" },
+    pr_pws = { "BB Scudo Mouse", "spell_holy_powerwordshield" },
+    pr_gheal = { "BB Cura Mouse", "spell_holy_greaterheal" },
+    pr_cancel = { "BB Cura Nuova", "spell_holy_flashheal" },
+    pr_if = { "BB Emergenza", "spell_frost_windwalkon" },
+    pr_dispel = { "BB Dissolvi", "spell_holy_dispelmagic" },
+    pr_pom = { "BB Mending", "spell_holy_prayerofhealing" },
+    pr_swd = { "BB Morte Ombra", "spell_shadow_demonicfortitude" },
+    r_main = { "BB Veleno Mano 1", "ability_poisons" },
+    r_off = { "BB Veleno Mano 2", "spell_nature_nullifypoison" },
+    r_pick = { "BB Borseggio", "ability_rogue_garrote" },
+    s_attack = { "BB Attacco", "ability_dualwield" },
+    s_storm = { "BB Stormstrike", "ability_thunderbolt" },
+    s_proj = { "BB Proiezione", "spell_nature_stoneskintotem" },
+    s_ns = { "BB Cura Veloce", "spell_nature_ravenform" },
+    m_poly = { "BB Polimorfo", "spell_nature_polymorph" },
+    m_trinket = { "BB Monili", "inv_misc_pocketwatch_01" },
+    m_comb = { "BB Combustione", "spell_fire_sealoffire" },
+    l_pet = { "BB Pet", "spell_shadow_summonimp" },
+    l_amp = { "BB Amplify Agony", "spell_shadow_contagion" },
+    l_drain = { "BB Drain Life", "spell_shadow_lifedrain02" },
+    l_dot = { "BB DOT Mouse", "spell_shadow_abominationexplosion" },
+    l_fel_imp = { "BB Fel Imp", "spell_nature_removecurse" },
+    l_fel_suc = { "BB Fel Succubus", "spell_shadow_summonsuccubus" },
+    l_havoc = { "BB Havoc Mouse", "spell_shadow_deathpact" },
+    l_f_immo = { "BB Focus Immo", "spell_fire_immolation" },
+    l_f_corr = { "BB Focus Corrup", "spell_shadow_abominationexplosion" },
+    l_f_doom = { "BB Focus Doom", "spell_shadow_auraofdarkness" },
+    l_f_agony = { "BB Focus Agony", "spell_shadow_curseofsargeras" },
+    d_hurr = { "BB Hurricane", "spell_nature_cyclone" },
+    d_moon = { "BB Lunare Mouse", "spell_nature_starfall" },
+    d_leap = { "BB Balzo+Prowl", "ability_ambush" },
+    d_shift = { "BB Power Shift", "ability_druid_catform" },
+    d_travel = { "BB Viaggio", "ability_druid_travelform" },
+    d_bear = { "BB Orso", "ability_racial_bearform" },
+    d_taunt = { "BB Provoca", "ability_physical_taunt" },
+    d_ns = { "BB Swift+Touch", "spell_nature_ravenform" },
+}
+for id, look in pairs(LOOK) do
+    local m = D[id]
+    assert(m and #look[1] <= 16, id)
+    m.old, m.name, m.icon = m.name, look[1], look[2]
+end
 
 local HEALER_PRIEST = { "pr_gheal", "pr_cancel", "pr_if", "pr_dispel", "pr_pom", "pr_swd" }
 local PALADIN_BASE = { "p_bop", "p_bof", "p_cleanse", "p_dummy" }
@@ -191,13 +250,20 @@ local function doCreate(list)
     local made, updated, skipped = 0, 0, 0
     for _, m in ipairs(list) do
         local idx = GetMacroIndexByName and GetMacroIndexByName(m.name) or 0
+        if (not idx or idx == 0) and m.old then
+            idx = GetMacroIndexByName(m.old) or 0 -- the macro of an earlier version: rename it
+        end
         if idx and idx > 0 then
-            EditMacro(idx, m.name, nil, m.body)
+            if not pcall(EditMacro, idx, m.name, m.icon, m.body) then
+                EditMacro(idx, m.name, nil, m.body)
+            end
             updated = updated + 1
         else
             local _, numChar = GetNumMacros()
             if numChar < 18 then
-                CreateMacro(m.name, "INV_Misc_QuestionMark", m.body, true)
+                if not pcall(CreateMacro, m.name, m.icon or "INV_Misc_QuestionMark", m.body, true) then
+                    CreateMacro(m.name, "INV_Misc_QuestionMark", m.body, true)
+                end
                 made = made + 1
             else
                 skipped = skipped + 1

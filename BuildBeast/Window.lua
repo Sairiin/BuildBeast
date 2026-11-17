@@ -273,7 +273,9 @@ local function fillMacros(v, _, _, class, specKey)
     v:Heading(T("Macro suggerite per questa spec"))
     v:Para(T("Il bottone qui sopra le crea nel gioco (con conferma). Poi le trovi in /macro e le trascini sulle barre. I nomi dei colpi sono quelli inglesi."), GREY_RGB[1], GREY_RGB[2], GREY_RGB[3])
     for _, m in ipairs(list) do
-        v:Card({ title = m.name, lines = T(m.why) .. "\n" .. GREY .. m.body .. END, bar = C_GOLD, bg = C_GOLD_BG })
+        -- the picture the macro gets when it is created, shown here before the macro
+        v:Card({ icon = m.icon and ("Interface\\Icons\\" .. m.icon) or QUESTION, size = 36, title = m.name,
+            lines = T(m.why) .. "\n" .. GREY .. m.body .. END, bar = C_GOLD, bg = C_GOLD_BG })
     end
     return v:End()
 end

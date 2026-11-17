@@ -5,7 +5,7 @@
 ## Author: Sairiin
 ## X-License: All Rights Reserved
 ## X-Copyright: (c) 2026 Sairiin. All rights reserved.
-## Version: 1.2.0
+## Version: 1.2.1
 ## IconTexture: Interface\AddOns\BuildBeast\icon.tga
 ## OptionalDeps: Hekili, GearQuestForever, ZygorGuidesViewerForever, LibDBIcon-1.0, LibDataBroker-1.1
 ## SavedVariables: BuildBeastDB, GuidaLivelliDB
@@ -51,6 +51,7 @@ Guide.lua
 Quick.lua
 View.lua
 Window.lua
+RotationData.lua
 Rotation.lua
 Glow.lua
 Cooldowns.lua

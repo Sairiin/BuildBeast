@@ -121,6 +121,9 @@ events:SetScript("OnEvent", function(_, event, arg1)
                 -- a new user follows the language of the game; whoever used the Italian version keeps Italian
                 BuildBeastDB.lang = fresh and "auto" or "it"
             end
+        elseif arg1 == "Hekili" and GF.AutoApplyRotation and BuildBeastDB then
+            -- Hekili was installed or loads after us: give it a moment to build its settings, then apply our priority
+            C_Timer.After(5, GF.AutoApplyRotation)
         end
         return
     end
@@ -175,8 +178,8 @@ events:SetScript("OnEvent", function(_, event, arg1)
         if GF.ApplyBase then
             GF.ApplyBase()
         end
-        if GF.InitRotation then
-            GF.InitRotation()
+        if GF.AutoApplyRotation then
+            GF.AutoApplyRotation()
         end
     end)
 end)
@@ -196,7 +199,7 @@ SlashCmdList["BUILDBEAST"] = function(msg)
         GF.ToggleOptions()
     elseif cmd == "rot" then
         GF.PrintRotation()
-    elseif cmd == "apply" then
+    elseif cmd == "apply" or cmd == "hekili" or cmd == "rotazione" then
         GF.InitRotation(true)
     elseif cmd == "glow" then
         GF.SetBarGlow(arg == "on")
