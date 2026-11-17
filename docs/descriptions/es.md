@@ -1,0 +1,17 @@
+# BuildBeast — guía de subida 1-60 para todas las clases (WoW Forever)
+
+Sabe siempre qué hacer en cada nivel. BuildBeast te dice qué talento elegir, qué habilidades recibes y cómo usarlas, qué objeto llevar, e ilumina los botones correctos en tus barras.
+
+**Funciones**
+- **Plan de talentos** de los 51 puntos, con marcas de colores en la propia ventana de talentos del juego (+N oro = puntos que gastar, OK verde = en orden, azul = más adelante, X roja = demasiados).
+- **Pestaña Nivel**: el talento que elegir ahora, habilidades nuevas con iconos, cómo usarlas, próximos talentos.
+- **Rotación por tramos de nivel**; con Hekili los botones correctos brillan (oro = ahora, azul = siguiente) y aparecen los números de reutilización.
+- **Opinión sobre objetos** en el tooltip: SÍ / NO / PARECIDO respecto a lo que llevas, con el porqué, estadísticas en verde y rojo, encantamiento sugerido y flechas en los iconos de la bolsa. Umbral ajustable.
+- **Macros** para cada especialización, creadas en el juego con un botón.
+- **Panel rápido** con el próximo talento y un mensaje al subir de nivel.
+- **10 idiomas**, detección automática y cambio en Opciones. Interfaz redimensionable.
+- 9 clases, 27 especializaciones (Paladín Holy: próximamente). Opcional: Hekili, GearQuest Forever.
+
+**Instalación:** copia la carpeta `BuildBeast` en `Interface/AddOns` y reinicia el juego. Se abre con el botón del minimapa o con `/bb`.
+
+Creado por **Sairiin**. © 2026 Sairiin — Todos los derechos reservados. Queda prohibido copiar, modificar o redistribuir el código.

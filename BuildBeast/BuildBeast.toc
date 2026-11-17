@@ -1,0 +1,57 @@
+## Interface: 16001
+## Title: BuildBeast
+## Notes: Level-by-level leveling guide by Sairiin: talent hints on the talent window, what to do at each level, and the rotation for Hekili. All classes (talents, spells and rotation by level, from the guides). /bb
+## Notes-itIT: Guida al livellamento di Sairiin, livello per livello: suggerimenti sul pannello dei talenti, cosa fare a ogni livello e la rotazione per Hekili. Tutte le classi (talenti, abilita' e rotazione per livello). /bb
+## Author: Sairiin
+## X-License: All Rights Reserved
+## X-Copyright: (c) 2026 Sairiin. All rights reserved.
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\BuildBeast\icon.tga
+## OptionalDeps: Hekili, GearQuestForever, ZygorGuidesViewerForever, LibDBIcon-1.0, LibDataBroker-1.1
+## SavedVariables: BuildBeastDB, GuidaLivelliDB
+
+Locale.lua
+Lang_ids.lua
+Lang_en.lua
+Lang_es.lua
+Lang_de.lua
+Lang_fr.lua
+Lang_pt.lua
+Lang_ru.lua
+Lang_ko.lua
+Lang_zh.lua
+Lang_zt.lua
+Cells_Warrior.lua
+Cells_Paladin.lua
+Cells_Hunter.lua
+Cells_Rogue.lua
+Cells_Priest.lua
+Cells_Shaman.lua
+Cells_Mage.lua
+Cells_Warlock.lua
+Cells_Druid.lua
+Data_Warrior.lua
+Data_Paladin.lua
+Data_Hunter.lua
+Data_Rogue.lua
+Data_Priest.lua
+Data_Shaman.lua
+Data_Mage.lua
+Data_Warlock.lua
+Data_Druid.lua
+Core.lua
+Specs.lua
+Translations_Data.lua
+Translations.lua
+Talents.lua
+Macros.lua
+Icons.lua
+Guide.lua
+Quick.lua
+Window.lua
+Rotation.lua
+Glow.lua
+Cooldowns.lua
+Verdict.lua
+Arrows.lua
+Options.lua
