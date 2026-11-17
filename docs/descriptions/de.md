@@ -8,6 +8,7 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 - **Rotation nach Stufenabschnitten**; mit Hekili leuchten die richtigen Tasten (Gold = jetzt, Blau = als Nächstes) und Abklingzeit-Zahlen erscheinen.
 - **Gegenstandsurteil** im Tooltip: JA / NEIN / ÄHNLICH im Vergleich zu deiner Ausrüstung, mit Begründung, grünen und roten Werten, empfohlener Verzauberung und Pfeilen auf den Taschensymbolen. Schwelle einstellbar.
 - **Makros** für jede Spezialisierung, mit einem Klick im Spiel erstellt.
+- **Volks-Ratgeber** (neu): welches Volk zu jeder Klasse und Spezialisierung passt, mit Schwierigkeit (einfach / mittel / schwer), Beschreibung, Vor- und Nachteilen. Funktioniert für jede Klasse, so kannst du deinen nächsten Charakter planen.
 - **Schnellfeld** mit dem nächsten Talent und einer Nachricht bei jedem Stufenaufstieg.
 - **10 Sprachen**, automatisch erkannt, in den Optionen änderbar. Skalierbare Oberfläche.
 - 9 Klassen, 27 Spezialisierungen (Heilig-Paladin: bald). Optional: Hekili, GearQuest Forever.

@@ -27,6 +27,7 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 - **Rotation notes by level range**; with Hekili installed the right buttons glow (gold = now, blue = next) and cooldown numbers appear on the buttons.
 - **Item verdict** in the tooltip: YES / NO / SIMILAR against what you wear, with the reason, green and red stats, the suggested enchant and arrows on bag icons. Threshold adjustable.
 - **Macros** for every spec, created in the game with one button.
+- **Race guide** (new): which race suits each class and spec, with difficulty (easy / medium / hard), what it does, pros and cons. Works for any class, so you can plan your next character.
 - **Quick panel** with the next talent and a message at every level up.
 - **10 languages** (it, en, es, de, fr, pt, ru, ko, zh-CN, zh-TW), auto-detected, changeable in Options. Resizable interface.
 - All 9 classes, 27 specs (Holy Paladin: coming soon). Optional: Hekili, GearQuest Forever.
@@ -48,6 +49,7 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 - **Rotazione per fasce di livello**; con Hekili i tasti giusti si illuminano (oro = ora, blu = prossimo) e compaiono i numeri di ricarica.
 - **Parere sugli oggetti** nel tooltip: SÌ / NO / SIMILE rispetto a quello che indossi, con il perché, statistiche verdi e rosse, incantamento suggerito e frecce sulle icone della borsa. Soglia regolabile.
 - **Macro** per ogni spec, create nel gioco con un bottone.
+- **Guida alla razza** (novità): quale razza conviene per ogni classe e specializzazione, con difficoltà (facile / media / difficile), cosa fa, pro e contro. Funziona per qualsiasi classe, così puoi pianificare il prossimo personaggio.
 - **Pannello rapido** con il prossimo talento e un messaggio a ogni livello.
 - **10 lingue**, rilevate in automatico e cambiabili nelle Opzioni. Interfaccia ridimensionabile.
 - Tutte le 9 classi, 27 spec (Paladino Holy: in arrivo). Facoltativi: Hekili, GearQuest Forever.
@@ -69,6 +71,7 @@ Sabe siempre qué hacer en cada nivel. BuildBeast te dice qué talento elegir, q
 - **Rotación por tramos de nivel**; con Hekili los botones correctos brillan (oro = ahora, azul = siguiente) y aparecen los números de reutilización.
 - **Opinión sobre objetos** en el tooltip: SÍ / NO / PARECIDO respecto a lo que llevas, con el porqué, estadísticas en verde y rojo, encantamiento sugerido y flechas en los iconos de la bolsa. Umbral ajustable.
 - **Macros** para cada especialización, creadas en el juego con un botón.
+- **Guía de raza** (novedad): qué raza conviene para cada clase y especialización, con dificultad (fácil / media / difícil), qué hace, pros y contras. Funciona con cualquier clase, para planificar tu próximo personaje.
 - **Panel rápido** con el próximo talento y un mensaje al subir de nivel.
 - **10 idiomas**, detección automática y cambio en Opciones. Interfaz redimensionable.
 - 9 clases, 27 especializaciones (Paladín Holy: próximamente). Opcional: Hekili, GearQuest Forever.
@@ -90,6 +93,7 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 - **Rotation nach Stufenabschnitten**; mit Hekili leuchten die richtigen Tasten (Gold = jetzt, Blau = als Nächstes) und Abklingzeit-Zahlen erscheinen.
 - **Gegenstandsurteil** im Tooltip: JA / NEIN / ÄHNLICH im Vergleich zu deiner Ausrüstung, mit Begründung, grünen und roten Werten, empfohlener Verzauberung und Pfeilen auf den Taschensymbolen. Schwelle einstellbar.
 - **Makros** für jede Spezialisierung, mit einem Klick im Spiel erstellt.
+- **Volks-Ratgeber** (neu): welches Volk zu jeder Klasse und Spezialisierung passt, mit Schwierigkeit (einfach / mittel / schwer), Beschreibung, Vor- und Nachteilen. Funktioniert für jede Klasse, so kannst du deinen nächsten Charakter planen.
 - **Schnellfeld** mit dem nächsten Talent und einer Nachricht bei jedem Stufenaufstieg.
 - **10 Sprachen**, automatisch erkannt, in den Optionen änderbar. Skalierbare Oberfläche.
 - 9 Klassen, 27 Spezialisierungen (Heilig-Paladin: bald). Optional: Hekili, GearQuest Forever.
@@ -111,6 +115,7 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 - **Rotation par paliers de niveau** ; avec Hekili, les bonnes touches s'illuminent (or = maintenant, bleu = suivante) et les chiffres de recharge s'affichent.
 - **Avis sur les objets** dans l'infobulle : OUI / NON / SIMILAIRE par rapport à ce que vous portez, avec la raison, caractéristiques en vert et rouge, enchantement suggéré et flèches sur les icônes des sacs. Seuil réglable.
 - **Macros** pour chaque spécialisation, créées dans le jeu en un clic.
+- **Guide des races** (nouveau) : quelle race convient à chaque classe et spécialisation, avec la difficulté (facile / moyenne / difficile), ce qu'elle fait, avantages et inconvénients. Fonctionne pour toutes les classes, pour préparer votre prochain personnage.
 - **Panneau rapide** avec le prochain talent et un message à chaque montée de niveau.
 - **10 langues**, détection automatique, modifiable dans les Options. Interface redimensionnable.
 - 9 classes, 27 spécialisations (Paladin Sacré : bientôt). Facultatif : Hekili, GearQuest Forever.
@@ -132,6 +137,7 @@ Saiba sempre o que fazer em cada nível. O BuildBeast diz qual talento escolher,
 - **Rotação por faixas de nível**; com o Hekili os botões certos brilham (ouro = agora, azul = próximo) e aparecem os números de recarga.
 - **Opinião sobre itens** na dica de ferramenta: SIM / NÃO / PARECIDO em relação ao que você veste, com o motivo, atributos em verde e vermelho, encantamento sugerido e setas nos ícones da bolsa. Limite ajustável.
 - **Macros** para cada especialização, criadas no jogo com um botão.
+- **Guia de raça** (novo): qual raça combina com cada classe e especialização, com dificuldade (fácil / média / difícil), o que faz, prós e contras. Funciona com qualquer classe, para planejar seu próximo personagem.
 - **Painel rápido** com o próximo talento e uma mensagem a cada nível.
 - **10 idiomas**, detectados automaticamente e alteráveis nas Opções. Interface redimensionável.
 - 9 classes, 27 especializações (Paladino Sagrado: em breve). Opcional: Hekili, GearQuest Forever.
@@ -153,6 +159,7 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - **Ротация по этапам уровней**; с Hekili нужные кнопки подсвечиваются (золотой = сейчас, синий = следующая) и появляются цифры перезарядки.
 - **Оценка предметов** в подсказке: ДА / НЕТ / ПОХОЖЕ по сравнению с надетым, с причиной, зелёными и красными характеристиками, предлагаемыми чарами и стрелками на значках в сумках. Порог настраивается.
 - **Макросы** для каждой специализации, создаются в игре одной кнопкой.
+- **Гид по расам** (новое): какая раса подходит каждому классу и специализации, со сложностью (легко / средне / сложно), описанием, плюсами и минусами. Работает для любого класса, чтобы спланировать следующего персонажа.
 - **Быстрая панель** со следующим талантом и сообщение при каждом новом уровне.
 - **10 языков**, определяются автоматически, меняются в Настройках. Масштабируемый интерфейс.
 - 9 классов, 27 специализаций (Свет у паладина: скоро). Дополнительно: Hekili, GearQuest Forever.
@@ -174,6 +181,7 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - **레벨 구간별 연계**: Hekili가 있으면 알맞은 버튼이 빛나고(금색 = 지금, 파랑 = 다음) 재사용 대기시간 숫자가 표시됩니다.
 - 툴팁의 **아이템 평가**: 착용 중인 것과 비교해 예 / 아니오 / 비슷함, 이유, 초록·빨강 능력치, 추천 마법부여, 가방 아이콘 화살표. 기준값 조절 가능.
 - 전문화별 **매크로**를 버튼 하나로 게임에 생성.
+- **종족 가이드** (신규): 클래스와 전문화별로 어울리는 종족을 난이도(쉬움 / 보통 / 어려움), 특징, 장단점과 함께 보여 줍니다. 모든 클래스에서 작동하므로 다음 캐릭터를 계획할 수 있습니다.
 - 다음 특성을 보여 주는 **빠른 패널**과 레벨업 때마다 메시지.
 - **10개 언어**, 자동 감지, 설정에서 변경. 크기 조절 가능한 인터페이스.
 - 9개 직업, 27개 전문화 (성기사 신성: 준비 중). 선택: Hekili, GearQuest Forever.
@@ -195,6 +203,7 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - **按等级阶段的输出循环**；有 Hekili 时正确的按键会亮起（金色 = 现在，蓝色 = 下一个），并显示冷却数字。
 - 提示框中的**物品评价**：与你穿戴的相比为 是 / 否 / 相近，附原因、绿色和红色属性、推荐附魔以及背包图标上的箭头。阈值可调。
 - 为每个专精提供**宏**，一键在游戏中创建。
+- **种族指南**（新）：每个职业和专精适合哪个种族，包含难度（简单 / 中等 / 困难）、特点、优点和缺点。适用于任何职业，方便规划下一个角色。
 - 显示下一个天赋的**快捷面板**，并在每次升级时提示。
 - **10种语言**，自动检测，可在选项中更改。界面可缩放。
 - 9个职业，27个专精（神圣圣骑士：即将推出）。可选：Hekili、GearQuest Forever。
@@ -216,6 +225,7 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - **依等級階段的輸出循環**；有 Hekili 時正確的按鍵會亮起（金色 = 現在，藍色 = 下一個），並顯示冷卻數字。
 - 提示框中的**物品評價**：與你穿戴的相比為 是 / 否 / 相近，附原因、綠色和紅色屬性、推薦附魔以及背包圖示上的箭頭。閾值可調。
 - 為每個專精提供**巨集**，一鍵在遊戲中建立。
+- **種族指南**（新）：每個職業和專精適合哪個種族，包含難度（簡單 / 中等 / 困難）、特點、優點和缺點。適用於任何職業，方便規劃下一個角色。
 - 顯示下一個天賦的**快捷面板**，並在每次升級時提示。
 - **10種語言**，自動偵測，可在選項中更改。介面可縮放。
 - 9個職業，27個專精（神聖聖騎士：即將推出）。選用：Hekili、GearQuest Forever。

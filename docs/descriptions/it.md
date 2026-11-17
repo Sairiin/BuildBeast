@@ -8,6 +8,7 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 - **Rotazione per fasce di livello**; con Hekili i tasti giusti si illuminano (oro = ora, blu = prossimo) e compaiono i numeri di ricarica.
 - **Parere sugli oggetti** nel tooltip: SÌ / NO / SIMILE rispetto a quello che indossi, con il perché, statistiche verdi e rosse, incantamento suggerito e frecce sulle icone della borsa. Soglia regolabile.
 - **Macro** per ogni spec, create nel gioco con un bottone.
+- **Guida alla razza** (novità): quale razza conviene per ogni classe e specializzazione, con difficoltà (facile / media / difficile), cosa fa, pro e contro. Funziona per qualsiasi classe, così puoi pianificare il prossimo personaggio.
 - **Pannello rapido** con il prossimo talento e un messaggio a ogni livello.
 - **10 lingue**, rilevate in automatico e cambiabili nelle Opzioni. Interfaccia ridimensionabile.
 - Tutte le 9 classi, 27 spec (Paladino Holy: in arrivo). Facoltativi: Hekili, GearQuest Forever.

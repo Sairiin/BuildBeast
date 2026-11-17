@@ -5,6 +5,7 @@
 --   Rotazione : the rotation, in steps by level
 --   Oggetti   : how items are judged for the spec
 --   Macro     : the macros suggested for the spec, with a button to create them
+--   Razza     : which race to pick for the class and spec (difficulty, pros and cons), for any class
 --   Guida     : how to use and set up the addon, the addons that work with it, the Italian translations
 -- Above the tabs: the spec buttons of the class (the spec Hekili detects is selected until you pick another).
 
@@ -17,6 +18,9 @@ end
 local frame
 local viewLevel
 local currentTab = "livello"
+local raceClass     -- class shown in the Razza tab (nil: the player's own)
+local raceSpec = {} -- class -> spec key chosen in the Razza tab
+local CLASS_ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
 
 local GOLD = "|cffffd100"
 local GREEN = "|cff33ff33"
@@ -31,6 +35,7 @@ local TABS = {
     { "rotazione", N("Rotazione") },
     { "oggetti", N("Oggetti") },
     { "macro", N("Macro") },
+    { "razza", N("Razza") },
     { "guida", N("Guida") },
     { "opzioni", N("Opzioni") },
 }
@@ -287,6 +292,58 @@ local function tabMacros(class, specKey)
     return table.concat(L, "\n")
 end
 
+-- Tab: Razza -------------------------------------------------------------------------------------------------------------
+local TIER_COLOR = { "|cff33ff33", "|cff4aa3ff", "|cffcccccc" }
+local DIFFICULTY = { f = { "easy", GREEN }, m = { "medium", "|cffe0b030" }, d = { "hard", RED } }
+
+local function tabRaces(class, specKey)
+    local lab = GF.RACE_LABELS
+    local data = GF.RACE_SPECS and GF.RACE_SPECS[class] and GF.RACE_SPECS[class][specKey]
+    if not (lab and data) then
+        return title(T("Razza consigliata"))
+    end
+    local L = { "|T" .. data.icon .. ":30|t " .. title(T(lab.title)), "" }
+    local diff = DIFFICULTY[data.difficulty]
+    L[#L + 1] = T(lab.difficulty) .. ": " .. diff[2] .. T(lab[diff[1]]) .. END
+    L[#L + 1] = T(data.summary)
+    L[#L + 1] = ""
+    L[#L + 1] = GREEN .. T(lab.pros) .. END
+    for _, p in ipairs(data.pros) do
+        L[#L + 1] = "  + " .. T(p)
+    end
+    L[#L + 1] = RED .. T(lab.cons) .. END
+    for _, c in ipairs(data.cons) do
+        L[#L + 1] = "  - " .. T(c)
+    end
+    for _, fac in ipairs({ "H", "A" }) do
+        local rows = {}
+        for i, r in ipairs(data.races) do
+            if GF.RACES[r[1]].faction == fac then
+                rows[#rows + 1] = { r = r, i = i }
+            end
+        end
+        table.sort(rows, function(a, b)
+            if a.r[2] ~= b.r[2] then
+                return a.r[2] < b.r[2]
+            end
+            return a.i < b.i
+        end)
+        if #rows > 0 then
+            L[#L + 1] = ""
+            L[#L + 1] = title(T(fac == "H" and lab.horde or lab.alliance))
+            for _, row in ipairs(rows) do
+                local race = GF.RACES[row.r[1]]
+                L[#L + 1] = "|T" .. race.icon .. ":28|t " .. WHITE .. T(race.name) .. END .. "  "
+                    .. TIER_COLOR[row.r[2]] .. T(lab["tier" .. row.r[2]]) .. END
+                for _, n in ipairs(row.r[3]) do
+                    L[#L + 1] = GREY .. "    + " .. T(race.traits[n]) .. END
+                end
+            end
+        end
+    end
+    return table.concat(L, "\n")
+end
+
 -- Window ----------------------------------------------------------------------------------------------------------------
 function GF.RefreshWindow()
     if not (frame and frame:IsShown()) then
@@ -294,6 +351,14 @@ function GF.RefreshWindow()
     end
     local spec, specKey, class = GF.specData()
     local mine = UnitLevel("player") or 1
+    local raceMode = (currentTab == "razza")
+    if raceMode then
+        local own = class
+        class = raceClass or own
+        if class ~= own or raceSpec[class] then
+            specKey = raceSpec[class] or GF.SPECS[class][1][1]
+        end
+    end
     viewLevel = math.max(1, math.min(60, viewLevel or mine))
 
     -- spec buttons
@@ -302,7 +367,7 @@ function GF.RefreshWindow()
     end
     local list = GF.SPECS[class] or {}
     local n = #list
-    local w = n > 0 and math.floor((486 - (n - 1) * 6) / n) or 100
+    local w = n > 0 and math.floor((526 - (n - 1) * 6) / n) or 100
     for i, s in ipairs(list) do
         local b = frame.specButtons[i]
         if not b then
@@ -314,9 +379,14 @@ function GF.RefreshWindow()
         b:ClearAllPoints()
         b:SetPoint("TOPLEFT", 16 + (i - 1) * (w + 6), -62)
         local has = GF.DATA and GF.DATA[class] and GF.DATA[class][s[1]]
-        b:SetText((s[1] == specKey and "> " or "") .. s[2] .. (has and "" or (" " .. T("(in arrivo)"))))
+        b:SetText((s[1] == specKey and "> " or "") .. s[2] .. ((has or raceMode) and "" or (" " .. T("(in arrivo)"))))
         b:SetScript("OnClick", function()
-            GF.ChooseSpec(s[1])
+            if raceMode then
+                raceSpec[class] = s[1]
+                GF.RefreshWindow()
+            else
+                GF.ChooseSpec(s[1])
+            end
         end)
         b:Show()
     end
@@ -326,11 +396,17 @@ function GF.RefreshWindow()
     end
     local classLabel = GF.CLASS_LABEL[class] and T(GF.CLASS_LABEL[class]) or tostring(class)
     local suffix = (viewLevel == mine) and ("  " .. T("(il tuo livello)")) or ""
-    frame.sub:SetText(classLabel .. " - " .. GF.specLabel(class, specKey) .. " - " .. Lf("livello %d", viewLevel) .. suffix)
+    if raceMode then
+        frame.sub:SetText(classLabel .. " - " .. GF.specLabel(class, specKey))
+    else
+        frame.sub:SetText(classLabel .. " - " .. GF.specLabel(class, specKey) .. " - " .. Lf("livello %d", viewLevel) .. suffix)
+    end
 
     local text
     if currentTab == "macro" then
         text = tabMacros(class, specKey)
+    elseif raceMode then
+        text = tabRaces(class, specKey)
     elseif currentTab == "guida" then
         text = GF.GuideText() .. "\n" .. tabAddons()
     elseif not spec then
@@ -364,6 +440,9 @@ function GF.RefreshWindow()
         GF.ApplyFonts(frame)
     end
     frame.macroBtn:SetShown(currentTab == "macro" and #GF.macrosFor(class, specKey) > 0)
+    for _, b in ipairs(frame.raceNav) do
+        b:SetShown(raceMode)
+    end
     local showNav = (currentTab == "livello" or currentTab == "rotazione")
     for _, b in ipairs(frame.navButtons) do
         if showNav then
@@ -376,7 +455,7 @@ end
 
 local function build()
     local f = CreateFrame("Frame", "BuildBeastFrame", UIParent, "BackdropTemplate")
-    f:SetSize(520, 600)
+    f:SetSize(560, 600)
     f:SetPoint("CENTER")
     f:SetFrameStrata("DIALOG")
     f:SetBackdrop({
@@ -411,7 +490,7 @@ local function build()
 
     -- tabs
     f.tabButtons = {}
-    local tw = math.floor((486 - (#TABS - 1) * 4) / #TABS)
+    local tw = math.floor((526 - (#TABS - 1) * 4) / #TABS)
     for i, t in ipairs(TABS) do
         local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
         b:SetSize(tw, 24)
@@ -446,6 +525,32 @@ local function build()
         GF.RefreshWindow()
     end)
 
+    -- class buttons of the Razza tab: look at the races of any class, also the ones you do not play
+    f.raceNav = {}
+    local function raceStep(delta)
+        local _, _, own = GF.specData()
+        local cur = raceClass or own
+        local idx = 1
+        for i, c in ipairs(CLASS_ORDER) do
+            if c == cur then
+                idx = i
+            end
+        end
+        raceClass = CLASS_ORDER[((idx - 1 + delta) % #CLASS_ORDER) + 1]
+        GF.RefreshWindow()
+    end
+    for i, def in ipairs({ { "<", -1, 16 }, { ">", 1, 56 } }) do
+        local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+        b:SetSize(36, 22)
+        b:SetPoint("TOPLEFT", def[3], -120)
+        b:SetText(def[1])
+        b:SetScript("OnClick", function()
+            raceStep(def[2])
+        end)
+        b:Hide()
+        f.raceNav[#f.raceNav + 1] = b
+    end
+
     local mb = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
     mb:SetSize(220, 22)
     mb:SetPoint("TOPLEFT", 16, -120)
@@ -460,11 +565,11 @@ local function build()
     scroll:SetPoint("TOPLEFT", 16, -150)
     scroll:SetPoint("BOTTOMRIGHT", -34, 44)
     local content = CreateFrame("Frame", nil, scroll)
-    content:SetSize(456, 10)
+    content:SetSize(496, 10)
     scroll:SetScrollChild(content)
     local text = content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     text:SetPoint("TOPLEFT", 0, 0)
-    text:SetWidth(456)
+    text:SetWidth(496)
     text:SetJustifyH("LEFT")
     text:SetJustifyV("TOP")
     f.text, f.scroll, f.content = text, scroll, content

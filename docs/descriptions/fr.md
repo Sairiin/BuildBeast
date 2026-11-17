@@ -8,6 +8,7 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 - **Rotation par paliers de niveau** ; avec Hekili, les bonnes touches s'illuminent (or = maintenant, bleu = suivante) et les chiffres de recharge s'affichent.
 - **Avis sur les objets** dans l'infobulle : OUI / NON / SIMILAIRE par rapport à ce que vous portez, avec la raison, caractéristiques en vert et rouge, enchantement suggéré et flèches sur les icônes des sacs. Seuil réglable.
 - **Macros** pour chaque spécialisation, créées dans le jeu en un clic.
+- **Guide des races** (nouveau) : quelle race convient à chaque classe et spécialisation, avec la difficulté (facile / moyenne / difficile), ce qu'elle fait, avantages et inconvénients. Fonctionne pour toutes les classes, pour préparer votre prochain personnage.
 - **Panneau rapide** avec le prochain talent et un message à chaque montée de niveau.
 - **10 langues**, détection automatique, modifiable dans les Options. Interface redimensionnable.
 - 9 classes, 27 spécialisations (Paladin Sacré : bientôt). Facultatif : Hekili, GearQuest Forever.

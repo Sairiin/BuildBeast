@@ -8,6 +8,7 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 - **Rotation notes by level range**; with Hekili installed the right buttons glow (gold = now, blue = next) and cooldown numbers appear on the buttons.
 - **Item verdict** in the tooltip: YES / NO / SIMILAR against what you wear, with the reason, green and red stats, the suggested enchant and arrows on bag icons. Threshold adjustable.
 - **Macros** for every spec, created in the game with one button.
+- **Race guide** (new): which race suits each class and spec, with difficulty (easy / medium / hard), what it does, pros and cons. Works for any class, so you can plan your next character.
 - **Quick panel** with the next talent and a message at every level up.
 - **10 languages** (it, en, es, de, fr, pt, ru, ko, zh-CN, zh-TW), auto-detected, changeable in Options. Resizable interface.
 - All 9 classes, 27 specs (Holy Paladin: coming soon). Optional: Hekili, GearQuest Forever.
