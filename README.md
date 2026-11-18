@@ -6,6 +6,8 @@
 
 Download: see [Releases](../../releases/latest) · also on CurseForge and WoWInterface.
 
+Install on **ROG Ally / Steam Deck** with one click: https://sairiin.github.io/BuildBeast/
+
 ![Talent window marks](docs/screenshots/00-talent-window-marks.png)
 ![Level tab](docs/screenshots/02-level-tab.png)
 ![Rotation tab](docs/screenshots/03-rotation-tab.png)
@@ -40,6 +42,8 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 
 **Install:** copy the `BuildBeast` folder into `Interface/AddOns`, restart the game. Open with the minimap button or `/bb`.
 
+**ROG Ally / Steam Deck:** one-click installer at https://sairiin.github.io/BuildBeast/
+
 Made by **Sairiin**. © 2026 Sairiin — All Rights Reserved. Copying, modifying or redistributing the code is not allowed.
 
 </details>
@@ -64,6 +68,8 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 - Tutte le 9 classi, 28 spec. Facoltativi: Hekili, GearQuest Forever.
 
 **Installazione:** copia la cartella `BuildBeast` in `Interface/AddOns`, riavvia il gioco. Si apre dal pulsante sulla minimappa o con `/bb`.
+
+**ROG Ally / Steam Deck:** installer con un clic su https://sairiin.github.io/BuildBeast/
 
 Realizzato da **Sairiin**. © 2026 Sairiin — Tutti i diritti riservati. È vietato copiare, modificare o ridistribuire il codice.
 
@@ -90,6 +96,8 @@ Sabe siempre qué hacer en cada nivel. BuildBeast te dice qué talento elegir, q
 
 **Instalación:** copia la carpeta `BuildBeast` en `Interface/AddOns` y reinicia el juego. Se abre con el botón del minimapa o con `/bb`.
 
+**ROG Ally / Steam Deck:** instalador con un clic en https://sairiin.github.io/BuildBeast/
+
 Creado por **Sairiin**. © 2026 Sairiin — Todos los derechos reservados. Queda prohibido copiar, modificar o redistribuir el código.
 
 </details>
@@ -114,6 +122,8 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 - 9 Klassen, 28 Spezialisierungen. Optional: Hekili, GearQuest Forever.
 
 **Installation:** Ordner `BuildBeast` nach `Interface/AddOns` kopieren, Spiel neu starten. Öffnen per Minimap-Button oder `/bb`.
+
+**ROG Ally / Steam Deck:** Ein-Klick-Installer unter https://sairiin.github.io/BuildBeast/
 
 Erstellt von **Sairiin**. © 2026 Sairiin — Alle Rechte vorbehalten. Das Kopieren, Ändern oder Weitergeben des Codes ist untersagt.
 
@@ -140,6 +150,8 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 
 **Installation :** copiez le dossier `BuildBeast` dans `Interface/AddOns`, relancez le jeu. Ouvrez-le avec le bouton de la minicarte ou `/bb`.
 
+**ROG Ally / Steam Deck :** installateur en un clic sur https://sairiin.github.io/BuildBeast/
+
 Réalisé par **Sairiin**. © 2026 Sairiin — Tous droits réservés. Il est interdit de copier, modifier ou redistribuer le code.
 
 </details>
@@ -164,6 +176,8 @@ Saiba sempre o que fazer em cada nível. O BuildBeast diz qual talento escolher,
 - 9 classes, 28 especializações. Opcional: Hekili, GearQuest Forever.
 
 **Instalação:** copie a pasta `BuildBeast` para `Interface/AddOns` e reinicie o jogo. Abra pelo botão do minimapa ou `/bb`.
+
+**ROG Ally / Steam Deck:** instalador com um clique em https://sairiin.github.io/BuildBeast/
 
 Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proibido copiar, modificar ou redistribuir o código.
 
@@ -190,6 +204,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 
 **Установка:** скопируйте папку `BuildBeast` в `Interface/AddOns` и перезапустите игру. Открывается кнопкой у миникарты или `/bb`.
 
+**ROG Ally / Steam Deck:** установщик в один клик: https://sairiin.github.io/BuildBeast/
+
 Создано **Sairiin**. © 2026 Sairiin — Все права защищены. Копировать, изменять и распространять код запрещено.
 
 </details>
@@ -214,6 +230,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - 9개 직업, 28개 전문화. 선택: Hekili, GearQuest Forever.
 
 **설치:** `BuildBeast` 폴더를 `Interface/AddOns`에 복사하고 게임을 다시 시작하세요. 미니맵 버튼 또는 `/bb`로 엽니다.
+
+**ROG Ally / Steam Deck:** 원클릭 설치 프로그램: https://sairiin.github.io/BuildBeast/
 
 제작: **Sairiin**. © 2026 Sairiin — 모든 권리 보유. 코드의 복사, 수정, 재배포를 금지합니다.
 
@@ -240,6 +258,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 
 **安装：** 将 `BuildBeast` 文件夹复制到 `Interface/AddOns`，重启游戏。通过小地图按钮或 `/bb` 打开。
 
+**ROG Ally / Steam Deck：** 一键安装程序：https://sairiin.github.io/BuildBeast/
+
 作者：**Sairiin**。© 2026 Sairiin — 保留所有权利。禁止复制、修改或再分发代码。
 
 </details>
@@ -264,6 +284,8 @@ Feito por **Sairiin**. © 2026 Sairiin — Todos os direitos reservados. É proi
 - 9個職業，28個專精。選用：Hekili、GearQuest Forever。
 
 **安裝：** 將 `BuildBeast` 資料夾複製到 `Interface/AddOns`，重新啟動遊戲。透過小地圖按鈕或 `/bb` 開啟。
+
+**ROG Ally / Steam Deck：** 一鍵安裝程式：https://sairiin.github.io/BuildBeast/
 
 作者：**Sairiin**。© 2026 Sairiin — 保留所有權利。禁止複製、修改或再散布程式碼。
 

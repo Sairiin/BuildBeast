@@ -18,4 +18,6 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 
 **Installation:** Ordner `BuildBeast` nach `Interface/AddOns` kopieren, Spiel neu starten. Öffnen per Minimap-Button oder `/bb`.
 
+Auch für ROG Ally und Steam Deck verfügbar. Für den Ein-Klick-Installer suche auf GitHub nach „Sairiin BuildBeast“.
+
 Erstellt von **Sairiin**. © 2026 Sairiin — Alle Rechte vorbehalten. Das Kopieren, Ändern oder Weitergeben des Codes ist untersagt.

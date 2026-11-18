@@ -18,4 +18,6 @@
 
 **설치:** `BuildBeast` 폴더를 `Interface/AddOns`에 복사하고 게임을 다시 시작하세요. 미니맵 버튼 또는 `/bb`로 엽니다.
 
+ROG Ally와 Steam Deck에서도 사용할 수 있습니다. 원클릭 설치 프로그램은 GitHub에서 "Sairiin BuildBeast"를 검색하세요.
+
 제작: **Sairiin**. © 2026 Sairiin — 모든 권리 보유. 코드의 복사, 수정, 재배포를 금지합니다.

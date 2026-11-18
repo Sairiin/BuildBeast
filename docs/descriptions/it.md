@@ -18,4 +18,6 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 
 **Installazione:** copia la cartella `BuildBeast` in `Interface/AddOns`, riavvia il gioco. Si apre dal pulsante sulla minimappa o con `/bb`.
 
+Disponibile anche per ROG Ally e Steam Deck. Per l'installer con un clic cerca "Sairiin BuildBeast" su GitHub.
+
 Realizzato da **Sairiin**. © 2026 Sairiin — Tutti i diritti riservati. È vietato copiare, modificare o ridistribuire il codice.

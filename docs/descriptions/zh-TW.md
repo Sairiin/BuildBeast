@@ -18,4 +18,6 @@
 
 **安裝：** 將 `BuildBeast` 資料夾複製到 `Interface/AddOns`，重新啟動遊戲。透過小地圖按鈕或 `/bb` 開啟。
 
+也支援 ROG Ally 和 Steam Deck。一鍵安裝程式請在 GitHub 搜尋「Sairiin BuildBeast」。
+
 作者：**Sairiin**。© 2026 Sairiin — 保留所有權利。禁止複製、修改或再散布程式碼。
