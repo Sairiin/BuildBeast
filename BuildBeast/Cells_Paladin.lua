@@ -1,4 +1,3 @@
--- BuildBeast (c) 2026 Sairiin. All rights reserved. Copying, modification or redistribution of this code is forbidden without written permission.
 BuildBeastCells = BuildBeastCells or {}
 BuildBeastCells.PALADIN = {
     ["0,0,1"] = "Spiritual Focus",

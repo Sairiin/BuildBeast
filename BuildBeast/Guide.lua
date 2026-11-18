@@ -55,6 +55,7 @@ function GF.GuideSections()
             cards = {
                 Lf("%s  apre la finestra     %s  le opzioni     %s  questa pagina", bb, GREEN .. "/bb opzioni" .. END, GREEN .. "/bb guida" .. END),
                 Lf("%s  cosa suggerisce Hekili     %s  controlla le icone", GREEN .. "/bb rot" .. END, GREEN .. "/bb icone" .. END),
+                Lf("%s  applica la rotazione di BuildBeast a Hekili", GREEN .. "/bb hekili" .. END),
             },
         },
     }

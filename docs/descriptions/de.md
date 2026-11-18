@@ -11,9 +11,10 @@ Du weißt auf jeder Stufe, was zu tun ist. BuildBeast sagt dir, welches Talent d
 - **Volks-Ratgeber** (neu): welches Volk zu jeder Klasse und Spezialisierung passt, mit Schwierigkeit (einfach / mittel / schwer), Beschreibung, Vor- und Nachteilen. Funktioniert für jede Klasse, so kannst du deinen nächsten Charakter planen.
 - **Übersichtliche Karten** in jedem Tab, ein Fenster, dessen Größe du am Rand ziehst, Tasten für die Textgröße (+ / -) und ein optionaler dunkler Hintergrund.
 - **Stil des Urteils** nach Wunsch: Wörter, Symbole (+ - =), Häkchen oder Pfeile. Gegenstände, die deine Klasse nicht nutzen kann, werden mit NEIN markiert.
+- **Hekili-Priorität für jede Spezialisierung**, aus dem Guide Stufe für Stufe geschrieben (wird von selbst angewendet oder mit /bb hekili), und **Makros** mit klaren Namen und je einem Symbol.
 - **Schnellfeld** mit dem nächsten Talent und einer Nachricht bei jedem Stufenaufstieg.
 - **10 Sprachen**, automatisch erkannt, in den Optionen änderbar. Skalierbare Oberfläche.
-- 9 Klassen, 27 Spezialisierungen (Heilig-Paladin: bald). Optional: Hekili, GearQuest Forever.
+- 9 Klassen, 28 Spezialisierungen. Optional: Hekili, GearQuest Forever.
 
 **Installation:** Ordner `BuildBeast` nach `Interface/AddOns` kopieren, Spiel neu starten. Öffnen per Minimap-Button oder `/bb`.
 

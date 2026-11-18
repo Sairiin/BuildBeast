@@ -11,9 +11,10 @@ Sai sempre cosa fare a ogni livello. BuildBeast ti dice quale talento prendere, 
 - **Guida alla razza** (novità): quale razza conviene per ogni classe e specializzazione, con difficoltà (facile / media / difficile), cosa fa, pro e contro. Funziona per qualsiasi classe, così puoi pianificare il prossimo personaggio.
 - **Schede a riquadri** chiare in ogni sezione, finestra ridimensionabile trascinando il bordo, tasti per la dimensione del testo (+ / -) e sfondo scuro opzionale.
 - **Stile del parere** a scelta: parole, simboli (+ - =), spunte o frecce. Gli oggetti che la tua classe non può usare sono segnati NO.
+- **Priorità Hekili per ogni spec**, scritta dalla guida livello per livello (si applica da sola, o con /bb hekili), e **macro** con nomi chiari e un'icona ciascuna.
 - **Pannello rapido** con il prossimo talento e un messaggio a ogni livello.
 - **10 lingue**, rilevate in automatico e cambiabili nelle Opzioni. Interfaccia ridimensionabile.
-- Tutte le 9 classi, 27 spec (Paladino Holy: in arrivo). Facoltativi: Hekili, GearQuest Forever.
+- Tutte le 9 classi, 28 spec. Facoltativi: Hekili, GearQuest Forever.
 
 **Installazione:** copia la cartella `BuildBeast` in `Interface/AddOns`, riavvia il gioco. Si apre dal pulsante sulla minimappa o con `/bb`.
 

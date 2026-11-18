@@ -49,9 +49,11 @@ GF.ROT_PACKS = {
         precombat = {
             { "battle_shout", "!buff.battle_shout.up", false },
             { "bloodrage", nil, false },
+            { "defensive_stance", "!buff.defensive_stance.up", false },
         },
         default = {
             { "charge", nil, false },
+            { "defensive_stance", "!buff.defensive_stance.up", false },
             { "battle_shout", "!buff.battle_shout.up", false },
             { "victory_rush", "buff.victorious.up", false },
             { "shield_slam", nil, false },
@@ -90,6 +92,7 @@ GF.ROT_PACKS = {
             { "seal_of_righteousness", "level<10&!buff.seal_of_righteousness.up", false },
             { "holy_shield", "!buff.holy_shield.up", false },
             { "judgement", nil, false },
+            { "swift_judgement", nil, false },
             { "consecration", nil, false },
             { "holy_strike", nil, false },
             { "hammer_of_wrath", "target.health.pct<20", false },
@@ -129,6 +132,7 @@ GF.ROT_PACKS = {
             { "aimed_shot", nil, false },
             { "arcane_shot", "level>=57&window.hha.next.arcane_shot", false },
             { "arcane_shot", "level<57", false },
+            { "raptor_strike", nil, false },
         },
     },
     [100033] = {
@@ -148,6 +152,7 @@ GF.ROT_PACKS = {
             { "multi_shot", nil, false },
             { "serpent_sting", "!debuff.serpent_sting.up&target.time_to_die>20", false },
             { "arcane_shot", nil, false },
+            { "aimed_shot", nil, false },
         },
     },
     [100041] = {
@@ -253,6 +258,7 @@ GF.ROT_PACKS = {
     [100071] = {
         name = "BuildBeast - Shaman Elemental",
         precombat = {
+            { "rockbiter_weapon", "!buff.rockbiter_weapon.up", false },
             { "lightning_shield", "level<51&!buff.lightning_shield.up", false },
             { "water_shield", "level>=51&!buff.water_shield.up", false },
             { "mana_spring_totem", "!totem.water.up", false },
@@ -278,6 +284,7 @@ GF.ROT_PACKS = {
             { "strength_of_earth_totem", "level>=26&!totem.earth.up", false },
             { "mana_spring_totem", "level>=26&!totem.water.up", false },
             { "searing_totem", "level>=26&!totem.fire.up", false },
+            { "windfury_totem", "level>=30&!totem.air.up", false },
         },
         default = {
             { "rockbiter_weapon", "level<30&!buff.rockbiter_weapon.up", false },
@@ -294,6 +301,7 @@ GF.ROT_PACKS = {
     [100073] = {
         name = "BuildBeast - Shaman Restoration",
         precombat = {
+            { "rockbiter_weapon", "!buff.rockbiter_weapon.up", false },
             { "water_shield", "!buff.water_shield.up", false },
             { "mana_spring_totem", "!totem.water.up", false },
         },
@@ -326,6 +334,7 @@ GF.ROT_PACKS = {
             { "fire_blast", nil, false },
             { "arcane_blast", "!buff.missile_barrage.up&buff.arcane_blast.stack<2", false },
             { "frostfire_bolt", "level>=40", false },
+            { "frostbolt", "level<20", false },
             { "fireball", nil, false },
         },
     },
@@ -351,6 +360,7 @@ GF.ROT_PACKS = {
             { "corruption", "!debuff.corruption.up&target.time_to_die>8", false },
             { "siphon_life", "level>=30&!debuff.siphon_life.up&target.time_to_die>15", false },
             { "immolate", "!debuff.immolate.up&target.time_to_die>20", false },
+            { "wrack", "level>=51&!debuff.wrack.up&target.time_to_die>8", false },
             { "drain_soul", "target.health.pct<25", false },
             { "shadow_bolt", nil, false },
         },
@@ -383,6 +393,7 @@ GF.ROT_PACKS = {
             { "incinerate", "level>=40&debuff.immolate.up", false },
             { "bane_of_agony", "!debuff.bane_of_agony.up&target.time_to_die>10", false },
             { "corruption", "!debuff.corruption.up&target.time_to_die>8", false },
+            { "drain_soul", "target.health.pct<25", false },
             { "shadow_bolt", nil, false },
         },
     },
@@ -438,6 +449,8 @@ GF.ROT_PACKS = {
             { "swipe_bear", "buff.bear_form.up&(active_enemies>=2|!action.lacerate.known)", false },
             { "lacerate", "buff.bear_form.up&debuff.lacerate.stack<5", false },
             { "maul", "buff.bear_form.up", true },
+            { "moonfire", "level<10&!debuff.moonfire.up&target.time_to_die>8", false },
+            { "wrath", "level<10", false },
         },
     },
     [100113] = {
@@ -455,6 +468,8 @@ GF.ROT_PACKS = {
             { "swipe_bear", "active_enemies>=2|!action.lacerate.known", false },
             { "lacerate", "debuff.lacerate.stack<5", false },
             { "maul", nil, true },
+            { "moonfire", "level<10&!debuff.moonfire.up&target.time_to_die>8", false },
+            { "wrath", "level<10", false },
         },
     },
 }

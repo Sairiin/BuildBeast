@@ -11,9 +11,10 @@ Know exactly what to do at every level. BuildBeast tells you which talent to tak
 - **Race guide** (new): which race suits each class and spec, with difficulty (easy / medium / hard), what it does, pros and cons. Works for any class, so you can plan your next character.
 - **Clean card layout** in every tab, a window you can resize by dragging its edge, text-size buttons (+ / -) and an optional dark background.
 - **Verdict style** to taste: words, symbols (+ - =), check marks or arrows. Items your class cannot use are marked NO.
+- **Hekili priority for every spec**, written from the guide level by level (it applies by itself, or with /bb hekili), and **macros** with clear names and an icon each.
 - **Quick panel** with the next talent and a message at every level up.
 - **10 languages** (it, en, es, de, fr, pt, ru, ko, zh-CN, zh-TW), auto-detected, changeable in Options. Resizable interface.
-- All 9 classes, 27 specs (Holy Paladin: coming soon). Optional: Hekili, GearQuest Forever.
+- All 9 classes, 28 specs. Optional: Hekili, GearQuest Forever.
 
 **Install:** copy the `BuildBeast` folder into `Interface/AddOns`, restart the game. Open with the minimap button or `/bb`.
 

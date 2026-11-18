@@ -11,7 +11,7 @@ local function N(text)
     return text
 end
 
-local VERSION = 20261117002
+local VERSION = 20261118001
 
 local function E(action, criteria, offgcd)
     local e = { enabled = true, action = action }
@@ -45,6 +45,7 @@ local PACKS = {
             E("aimed_shot"),
             E("arcane_shot", "window.hha.next.arcane_shot"),
             E("arcane_shot", "!action.summon_hawk.known"),
+            E("raptor_strike"), -- the mob reached you: Raptor Strike (the guide: as the last resort)
         },
     },
 }

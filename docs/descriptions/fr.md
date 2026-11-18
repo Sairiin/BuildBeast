@@ -11,9 +11,10 @@ Sachez toujours quoi faire à chaque niveau. BuildBeast vous dit quel talent pre
 - **Guide des races** (nouveau) : quelle race convient à chaque classe et spécialisation, avec la difficulté (facile / moyenne / difficile), ce qu'elle fait, avantages et inconvénients. Fonctionne pour toutes les classes, pour préparer votre prochain personnage.
 - **Présentation en cartes** claire dans chaque onglet, fenêtre redimensionnable en tirant son bord, boutons de taille du texte (+ / -) et fond sombre facultatif.
 - **Style de l'avis** au choix : mots, symboles (+ - =), coches ou flèches. Les objets que ta classe ne peut pas utiliser sont marqués NON.
+- **Priorité Hekili pour chaque spécialisation**, écrite à partir du guide niveau par niveau (elle s'applique toute seule, ou avec /bb hekili), et **macros** aux noms clairs avec une icône chacune.
 - **Panneau rapide** avec le prochain talent et un message à chaque montée de niveau.
 - **10 langues**, détection automatique, modifiable dans les Options. Interface redimensionnable.
-- 9 classes, 27 spécialisations (Paladin Sacré : bientôt). Facultatif : Hekili, GearQuest Forever.
+- 9 classes, 28 spécialisations. Facultatif : Hekili, GearQuest Forever.
 
 **Installation :** copiez le dossier `BuildBeast` dans `Interface/AddOns`, relancez le jeu. Ouvrez-le avec le bouton de la minicarte ou `/bb`.
 

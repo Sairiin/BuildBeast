@@ -199,6 +199,7 @@ GF.MACRO_DEFS = D
 GF.MACROS = {
     WARRIOR = { arms = WARRIOR, fury = WARRIOR, protection = WARRIOR },
     PALADIN = {
+        holy = { "p_bop", "p_bof", "p_cleanse", "p_bubble" },
         retribution = PALADIN_BASE,
         protection = { "p_bop", "p_bof", "p_cleanse", "p_bubble", "p_holystrike", "p_dummy" },
     },
