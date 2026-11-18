@@ -11,6 +11,9 @@ Download: see [Releases](../../releases/latest) · also on CurseForge and WoWInt
 ![Rotation tab](docs/screenshots/03-rotation-tab.png)
 ![Item verdict](docs/screenshots/04-item-verdict-no.png)
 ![Macros](docs/screenshots/05-macros-tab.png)
+![Items](docs/screenshots/08-items-tab.png)
+![Race guide](docs/screenshots/09-race-tab.png)
+![Guide](docs/screenshots/10-guide-tab.png)
 ![Options and language](docs/screenshots/06-options-language.png)
 
 > **License: All Rights Reserved.** You may install and use the addon for your own play. Copying, modifying, translating, redistributing or reusing the code or its texts is not allowed without written permission. See [LICENSE](LICENSE).
