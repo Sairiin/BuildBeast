@@ -286,6 +286,16 @@ local function judge(link)
     elseif delta <= -limit then
         return "NO", { 1, 0.25, 0.25 }, reasons
     end
+    -- the stats that matter are about the same: for a weapon the DPS decides (when your spec uses that weapon)
+    if kind then
+        local dd = (newParts.dps or 0) - (oldParts.dps or 0)
+        local used = (kind == "ranged") or ((w.meleeDps or 0) > 0)
+        if used and dd >= 0.5 then
+            return "SI", { 0, 1, 0 }, reasons
+        elseif used and dd <= -0.5 then
+            return "NO", { 1, 0.25, 0.25 }, reasons
+        end
+    end
     -- the stats that matter are about the same: the armor decides
     if armorDiff > 0 then
         reasons[#reasons + 1] = T("A parita' di statistiche, piu' armatura e' meglio.")
