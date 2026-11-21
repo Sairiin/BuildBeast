@@ -237,15 +237,24 @@ local function judge(link)
             end
         end
     end
-    -- differences in stats that carry no weight for this spec (armor, spell damage...)
+    -- armor: it carries no weight in the score, but when the stats that matter are the same, more armor is better
+    local ARMOR = "RESISTANCE0_NAME"
+    local armorDiff = 0
+    if not kind then
+        armorDiff = ((newParts.other or {})[ARMOR] or 0) - ((oldParts.other or {})[ARMOR] or 0)
+    end
+    if armorDiff ~= 0 then
+        reasons[#reasons + 1] = T("Armatura:") .. " " .. (armorDiff > 0 and green(sign(armorDiff)) or red(sign(armorDiff))) .. "."
+    end
+    -- differences in stats that carry no weight for this spec (spell damage...)
     local otherDiff = false
     for key, v in pairs(newParts.other or {}) do
-        if v ~= ((oldParts.other or {})[key] or 0) then
+        if key ~= ARMOR and v ~= ((oldParts.other or {})[key] or 0) then
             otherDiff = true
         end
     end
     for key, v in pairs(oldParts.other or {}) do
-        if v ~= ((newParts.other or {})[key] or 0) then
+        if key ~= ARMOR and v ~= ((newParts.other or {})[key] or 0) then
             otherDiff = true
         end
     end
@@ -275,6 +284,14 @@ local function judge(link)
     if delta >= limit then
         return "SI", { 0, 1, 0 }, reasons
     elseif delta <= -limit then
+        return "NO", { 1, 0.25, 0.25 }, reasons
+    end
+    -- the stats that matter are about the same: the armor decides
+    if armorDiff > 0 then
+        reasons[#reasons + 1] = T("A parita' di statistiche, piu' armatura e' meglio.")
+        return "SI", { 0, 1, 0 }, reasons
+    elseif armorDiff < 0 then
+        reasons[#reasons + 1] = T("A parita' di statistiche, meno armatura e' peggio.")
         return "NO", { 1, 0.25, 0.25 }, reasons
     end
     return "SIMILE", { 1, 0.85, 0.2 }, reasons
